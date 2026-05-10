@@ -3,71 +3,39 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KM EASSENTIALS — Fine Watches</title>
+<title>KM Essentials — Fine Watches</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --gold:#C9A84C;
-  --gold-light:#E8C96A;
-  --gold-dark:#9A7830;
-  --bg:#0A0A08;
-  --bg2:#111109;
-  --bg3:#181713;
-  --text:#F5F0E8;
-  --text2:#A09880;
-  --text3:#5A5545;
-  --border:rgba(201,168,76,0.15);
-  --border2:rgba(201,168,76,0.3);
+  --gold:#C9A84C;--gold-light:#E8C96A;--gold-dark:#9A7830;
+  --bg:#0A0A08;--bg2:#111109;--bg3:#181713;
+  --text:#F5F0E8;--text2:#A09880;--text3:#5A5545;
+  --border:rgba(201,168,76,0.15);--border2:rgba(201,168,76,0.3);
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-h1,h2,h3,.serif{font-family:'Cormorant Garant',serif}
+h1,h2,h3{font-family:'Cormorant Garant',serif}
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:0 2rem;height:64px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(10,10,8,0.94);backdrop-filter:blur(16px);
-  border-bottom:0.5px solid var(--border);
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,8,0.94);backdrop-filter:blur(16px);border-bottom:0.5px solid var(--border)}
 .nav-logo{font-family:'Cormorant Garant',serif;font-size:22px;font-weight:600;letter-spacing:0.12em;color:var(--gold);text-decoration:none}
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{text-decoration:none;color:var(--text2);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
 .nav-links a:hover{color:var(--gold)}
 .nav-right{display:flex;align-items:center;gap:1rem}
 .search-wrap{position:relative}
-.search-wrap input{
-  background:rgba(255,255,255,0.04);border:0.5px solid var(--border);
-  color:var(--text);padding:7px 14px 7px 34px;
-  border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;
-  width:190px;transition:all 0.25s;outline:none;
-}
+.search-wrap input{background:rgba(255,255,255,0.04);border:0.5px solid var(--border);color:var(--text);padding:7px 14px 7px 34px;border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;width:190px;transition:all 0.25s;outline:none}
 .search-wrap input:focus{border-color:var(--gold);background:rgba(201,168,76,0.06);width:230px}
 .search-wrap input::placeholder{color:var(--text3)}
-.s-icon{
-  position:absolute;left:11px;top:50%;transform:translateY(-50%);
-  color:var(--text3);font-size:14px;pointer-events:none;
-}
-.btn-nav{
-  background:var(--gold);color:#0A0A08;border:none;
-  padding:8px 18px;font-family:'DM Sans',sans-serif;
-  font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
-  cursor:pointer;transition:background 0.2s;border-radius:1px;
-}
+.s-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none}
+.btn-nav{background:var(--gold);color:#0A0A08;border:none;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;border-radius:1px}
 .btn-nav:hover{background:var(--gold-light)}
 
-/* ── HERO ── */
-.hero{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;
-}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,0.07) 0%,transparent 70%)}
-.ring{
-  position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;
-  border:0.5px solid var(--border);
-}
+.ring{position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;border:0.5px solid var(--border)}
 .ring1{width:620px;height:620px;transform:translate(-50%,-50%);animation:spin 32s linear infinite}
 .ring2{width:420px;height:420px;transform:translate(-50%,-50%);border-color:rgba(201,168,76,0.08);animation:spin 22s linear infinite reverse}
 .ring3{width:260px;height:260px;transform:translate(-50%,-50%);border-color:rgba(201,168,76,0.05);animation:spin 14s linear infinite}
@@ -77,201 +45,114 @@ nav{
 .hero-title{font-family:'Cormorant Garant',serif;font-size:clamp(54px,8vw,96px);font-weight:300;line-height:0.95;color:var(--text);margin-bottom:1.5rem}
 .hero-title em{font-style:italic;color:var(--gold)}
 .hero-desc{color:var(--text2);max-width:480px;margin:0 auto 2.5rem;font-size:15px;line-height:1.8}
-.btn-primary{
-  background:transparent;border:0.5px solid var(--gold);color:var(--gold);
-  padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:12px;
-  letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;
-  transition:all 0.3s;margin-right:12px;
-}
+.btn-primary{background:transparent;border:0.5px solid var(--gold);color:var(--gold);padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;margin-right:12px}
 .btn-primary:hover{background:var(--gold);color:#0A0A08}
-.btn-ghost{
-  background:transparent;border:0.5px solid var(--text3);color:var(--text2);
-  padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:12px;
-  letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;
-}
+.btn-ghost{background:transparent;border:0.5px solid var(--text3);color:var(--text2);padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.3s}
 .btn-ghost:hover{border-color:var(--text2);color:var(--text)}
-.hero-stats{
-  display:flex;gap:3rem;justify-content:center;
-  margin-top:4rem;padding-top:3rem;border-top:0.5px solid var(--border);
-}
+.hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:4rem;padding-top:3rem;border-top:0.5px solid var(--border)}
 .stat-num{font-family:'Cormorant Garant',serif;font-size:36px;font-weight:300;color:var(--gold)}
 .stat-lbl{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-top:4px}
 
-/* ── SECTION SHARED ── */
+/* SECTION */
 section{padding:5rem 2rem}
 .section-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
 .section-title{font-family:'Cormorant Garant',serif;font-size:42px;font-weight:300;color:var(--text);margin-bottom:1rem}
 .section-sub{color:var(--text2);font-size:15px;line-height:1.7;max-width:560px}
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem}
 
-/* ── FILTERS ── */
+/* FILTERS */
 .filters{display:flex;gap:0.5rem;flex-wrap:wrap}
-.filter-btn{
-  background:transparent;border:0.5px solid var(--border);color:var(--text2);
-  padding:7px 18px;font-family:'DM Sans',sans-serif;font-size:12px;
-  letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;
-  border-radius:1px;transition:all 0.2s;
-}
+.filter-btn{background:transparent;border:0.5px solid var(--border);color:var(--text2);padding:7px 18px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border-radius:1px;transition:all 0.2s}
 .filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.06)}
 
-/* ── PRODUCT GRID ── */
+/* PRODUCT GRID */
 .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px}
-.product-card{
-  background:var(--bg2);border:0.5px solid var(--border);
-  position:relative;overflow:hidden;cursor:pointer;
-  transition:all 0.3s;display:flex;flex-direction:column;
-}
+.product-card{background:var(--bg2);border:0.5px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:all 0.3s;display:flex;flex-direction:column}
 .product-card:hover{border-color:var(--gold-dark);transform:translateY(-3px)}
 .product-card:hover .card-overlay{opacity:1}
-.card-img{
-  width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;
-  background:var(--bg3);position:relative;overflow:hidden;
-}
+.card-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--bg3);position:relative;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
+.product-card:hover .card-img img{transform:scale(1.06)}
 .watch-svg-wrap{transition:transform 0.4s}
 .product-card:hover .watch-svg-wrap{transform:scale(1.07) rotate(4deg)}
-.card-overlay{
-  position:absolute;inset:0;background:rgba(10,10,8,0.72);
-  opacity:0;transition:opacity 0.3s;
-  display:flex;align-items:center;justify-content:center;
-}
-.overlay-btn{
-  background:var(--gold);color:#0A0A08;border:none;
-  padding:10px 28px;font-family:'DM Sans',sans-serif;
-  font-size:11px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;
-}
-.card-badge{
-  position:absolute;top:12px;left:12px;
-  background:var(--gold);color:#0A0A08;
-  font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:3px 8px;
-}
+.card-overlay{position:absolute;inset:0;background:rgba(10,10,8,0.72);opacity:0;transition:opacity 0.3s;display:flex;align-items:center;justify-content:center}
+.overlay-btn{background:var(--gold);color:#0A0A08;border:none;padding:10px 28px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer}
+.card-badge{position:absolute;top:12px;left:12px;background:var(--gold);color:#0A0A08;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:3px 8px;z-index:2}
 .card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column;border-top:0.5px solid var(--border)}
 .card-collection{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
 .card-name{font-family:'Cormorant Garant',serif;font-size:20px;font-weight:400;color:var(--text);margin-bottom:6px}
 .card-desc{font-size:13px;color:var(--text2);line-height:1.6;flex:1;margin-bottom:1rem}
 .card-footer{display:flex;align-items:center;justify-content:space-between}
 .card-price{font-family:'Cormorant Garant',serif;font-size:22px;color:var(--gold)}
-.card-price small{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);margin-right:3px}
-.card-wa{
-  width:36px;height:36px;border:0.5px solid var(--border2);
-  background:transparent;color:var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all 0.2s;font-size:15px;flex-shrink:0;
-}
+.card-wa{width:36px;height:36px;border:0.5px solid var(--border2);background:transparent;color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:15px;flex-shrink:0}
 .card-wa:hover{background:var(--gold);color:#0A0A08}
-.no-results{text-align:center;color:var(--text3);padding:4rem 2rem;font-size:15px;display:none;font-family:'Cormorant Garant',serif;font-style:italic;font-size:22px}
+.no-results{text-align:center;color:var(--text3);padding:4rem 2rem;display:none;font-family:'Cormorant Garant',serif;font-style:italic;font-size:22px}
+.empty-store{text-align:center;padding:5rem 2rem;display:none}
+.empty-store h3{font-family:'Cormorant Garant',serif;font-size:28px;font-weight:300;color:var(--text2);margin-bottom:1rem}
+.empty-store p{color:var(--text3);font-size:14px}
 
-/* ── MODAL ── */
-.modal-backdrop{
-  position:fixed;inset:0;background:rgba(5,5,4,0.93);
-  z-index:200;display:none;align-items:center;justify-content:center;padding:1.5rem;
-}
+/* MODAL */
+.modal-backdrop{position:fixed;inset:0;background:rgba(5,5,4,0.93);z-index:200;display:none;align-items:center;justify-content:center;padding:1.5rem}
 .modal-backdrop.open{display:flex}
-.modal{
-  background:var(--bg2);border:0.5px solid var(--border2);
-  max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative;
-}
-.modal-close{
-  position:absolute;top:1rem;right:1rem;z-index:10;
-  background:transparent;border:none;color:var(--text2);
-  font-size:24px;cursor:pointer;line-height:1;padding:2px 6px;
-}
+.modal{background:var(--bg2);border:0.5px solid var(--border2);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;z-index:10;background:transparent;border:none;color:var(--text2);font-size:24px;cursor:pointer;line-height:1;padding:2px 6px}
 .modal-close:hover{color:var(--gold)}
 .modal-inner{padding:2.5rem}
 .modal-top{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2rem}
-.modal-img{
-  width:200px;min-width:160px;aspect-ratio:1;flex-shrink:0;
-  background:var(--bg3);border:0.5px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-}
+.modal-img{width:220px;min-width:160px;aspect-ratio:1;flex-shrink:0;background:var(--bg3);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.modal-img img{width:100%;height:100%;object-fit:cover}
 .modal-info{flex:1;min-width:200px}
 .modal-collection{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .modal-name{font-family:'Cormorant Garant',serif;font-size:30px;font-weight:300;margin-bottom:12px}
 .modal-price{font-family:'Cormorant Garant',serif;font-size:26px;color:var(--gold);margin-bottom:16px}
-.modal-price small{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);margin-right:4px}
 .modal-desc{color:var(--text2);font-size:14px;line-height:1.85;margin-bottom:1.5rem}
 .spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.5rem;margin-bottom:1.75rem}
 .spec-item{background:var(--bg3);padding:10px 12px;border:0.5px solid var(--border)}
 .spec-key{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
 .spec-val{font-size:13px;color:var(--text)}
 .modal-actions{display:flex;gap:0.75rem;flex-wrap:wrap}
-.btn-wa{
-  background:#25D366;color:#fff;border:none;
-  padding:13px 24px;font-family:'DM Sans',sans-serif;
-  font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
-  cursor:pointer;transition:background 0.2s;display:flex;align-items:center;gap:8px;
-}
+.btn-wa{background:#25D366;color:#fff;border:none;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;display:flex;align-items:center;gap:8px}
 .btn-wa:hover{background:#1dab52}
-.btn-mpesa{
-  background:var(--gold);color:#0A0A08;border:none;
-  padding:13px 24px;font-family:'DM Sans',sans-serif;
-  font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
-  cursor:pointer;transition:background 0.2s;
-}
+.btn-mpesa{background:var(--gold);color:#0A0A08;border:none;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
 .btn-mpesa:hover{background:var(--gold-light)}
-.btn-wishlist{
-  background:transparent;border:0.5px solid var(--border2);color:var(--text2);
-  padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:12px;
-  cursor:pointer;transition:all 0.2s;
-}
+.btn-wishlist{background:transparent;border:0.5px solid var(--border2);color:var(--text2);padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s}
 .btn-wishlist:hover{border-color:var(--gold);color:var(--gold)}
 
-/* ── PAYMENT SECTION ── */
+/* PAYMENT */
 .pay-section{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
 .pay-inner{max-width:960px;margin:0 auto}
 .pay-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem;margin-top:2.5rem}
 .pay-step{padding:1.5rem;background:var(--bg3);border:0.5px solid var(--border)}
 .pay-num{font-family:'Cormorant Garant',serif;font-size:52px;font-weight:300;color:var(--border2);line-height:1;margin-bottom:0.75rem}
-.pay-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;letter-spacing:0.04em}
+.pay-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px}
 .pay-text{font-size:13px;color:var(--text2);line-height:1.7}
 .pay-cta{margin-top:2.5rem;display:flex;gap:2rem;align-items:center;flex-wrap:wrap;padding-top:2rem;border-top:0.5px solid var(--border)}
 .biz-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
 .biz-num{font-family:'Cormorant Garant',serif;font-size:32px;color:var(--gold)}
 
-/* ── ABOUT ── */
+/* ABOUT */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:960px;margin:0 auto}
-.about-img{
-  aspect-ratio:3/4;background:var(--bg2);border:0.5px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cormorant Garant',serif;font-size:100px;font-weight:300;
-  color:rgba(201,168,76,0.1);font-style:italic;
-}
-.about-quote{
-  font-family:'Cormorant Garant',serif;font-size:21px;font-weight:300;font-style:italic;
-  color:var(--text2);line-height:1.65;margin-bottom:1.5rem;
-  border-left:2px solid var(--gold);padding-left:1.5rem;
-}
+.about-img{aspect-ratio:3/4;background:var(--bg2);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garant',serif;font-size:100px;font-weight:300;color:rgba(201,168,76,0.1);font-style:italic}
+.about-quote{font-family:'Cormorant Garant',serif;font-size:21px;font-weight:300;font-style:italic;color:var(--text2);line-height:1.65;margin-bottom:1.5rem;border-left:2px solid var(--gold);padding-left:1.5rem}
 .contact-list{list-style:none;margin-top:2rem}
-.contact-list li{
-  display:flex;align-items:center;gap:12px;
-  padding:13px 0;border-bottom:0.5px solid var(--border);
-  font-size:14px;color:var(--text2);
-}
+.contact-list li{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:0.5px solid var(--border);font-size:14px;color:var(--text2)}
 .contact-list li strong{color:var(--text);font-weight:400;min-width:80px}
 .contact-list a{color:var(--gold);text-decoration:none}
 .contact-list a:hover{text-decoration:underline}
 
-/* ── FOOTER ── */
-footer{
-  padding:3rem 2rem 2rem;border-top:0.5px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  flex-wrap:wrap;gap:1.5rem;
-}
+/* FOOTER */
+footer{padding:3rem 2rem 2rem;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
 .footer-logo{font-family:'Cormorant Garant',serif;font-size:20px;font-weight:600;letter-spacing:0.12em;color:var(--gold)}
 .footer-links{display:flex;gap:2rem;list-style:none;flex-wrap:wrap}
 .footer-links a{text-decoration:none;color:var(--text3);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
 .footer-links a:hover{color:var(--gold)}
 .footer-copy{font-size:12px;color:var(--text3)}
 
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:2rem;right:2rem;
-  background:var(--bg2);border:0.5px solid var(--gold);
-  color:var(--text);padding:12px 20px;font-size:13px;z-index:500;
-  transform:translateY(80px);opacity:0;transition:all 0.3s;
-}
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);border:0.5px solid var(--gold);color:var(--text);padding:12px 20px;font-size:13px;z-index:500;transform:translateY(80px);opacity:0;transition:all 0.3s}
 .toast.show{transform:translateY(0);opacity:1}
 
-/* ── RESPONSIVE ── */
+/* RESPONSIVE */
 @media(max-width:720px){
   .nav-links{display:none}
   .hero-stats{flex-direction:column;gap:1.5rem;align-items:center}
@@ -279,17 +160,14 @@ footer{
   .modal-top{flex-direction:column}
   .modal-img{width:100%;min-width:unset}
   .btn-primary,.btn-ghost{padding:12px 24px}
-  .search-wrap input{width:150px}
-  .search-wrap input:focus{width:170px}
   footer{flex-direction:column;text-align:center}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
 <nav>
-  <a class="nav-logo" href="#home">TEMPO</a>
+  <a class="nav-logo" href="#home">KM Essentials</a>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#collection">Collection</a></li>
@@ -301,11 +179,10 @@ footer{
       <span class="s-icon">&#9906;</span>
       <input type="text" id="searchInput" placeholder="Search watches..." oninput="renderCards()"/>
     </div>
-    <button class="btn-nav" onclick="scrollTo('collection')">Shop Now</button>
+    <button class="btn-nav" onclick="goTo('collection')">Shop Now</button>
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="ring ring1"></div>
@@ -315,17 +192,16 @@ footer{
     <p class="hero-sub">Curated Timepieces &mdash; Nairobi, Kenya</p>
     <h1 class="hero-title">Time is your<br/><em>finest</em> luxury</h1>
     <p class="hero-desc">Discover handpicked watches that blend craftsmanship, elegance, and heritage. Every piece tells a story worth wearing.</p>
-    <button class="btn-primary" onclick="scrollTo('collection')">Explore Collection</button>
+    <button class="btn-primary" onclick="goTo('collection')">Explore Collection</button>
     <button class="btn-ghost" onclick="openWA('Hello! I\'d like to know more about your watch collection.')">Chat with Us</button>
     <div class="hero-stats">
-      <div><div class="stat-num">48+</div><div class="stat-lbl">Timepieces</div></div>
+      <div><div class="stat-num" id="statCount">0</div><div class="stat-lbl">Timepieces</div></div>
       <div><div class="stat-num">5 &#9733;</div><div class="stat-lbl">Rated</div></div>
       <div><div class="stat-num">3yr</div><div class="stat-lbl">Warranty</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ COLLECTION ═══ -->
 <section id="collection">
   <div class="section-head">
     <div>
@@ -333,7 +209,7 @@ footer{
       <h2 class="section-title">Fine Timepieces</h2>
       <p class="section-sub">Each watch selected for quality, style, and lasting value.</p>
     </div>
-    <div class="filters" id="filters">
+    <div class="filters">
       <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
       <button class="filter-btn" onclick="setFilter('dress',this)">Dress</button>
       <button class="filter-btn" onclick="setFilter('sport',this)">Sport</button>
@@ -341,51 +217,32 @@ footer{
       <button class="filter-btn" onclick="setFilter('luxury',this)">Luxury</button>
     </div>
   </div>
+  <div class="empty-store" id="emptyStore">
+    <h3>No watches yet</h3>
+    <p>The collection is being curated. Check back soon.</p>
+  </div>
   <div class="product-grid" id="productGrid"></div>
   <p class="no-results" id="noResults">No watches found &mdash; try a different search.</p>
 </section>
 
-<!-- ═══ PAYMENT ═══ -->
 <section class="pay-section" id="payment">
   <div class="pay-inner">
     <div class="section-label">Simple &amp; Secure</div>
     <h2 class="section-title">How to Pay</h2>
-    <p class="section-sub">We accept M-Pesa and bank transfer. Payment is quick, safe, and confirmed within minutes.</p>
+    <p class="section-sub">We accept M-Pesa and bank transfer. Quick, safe, and confirmed within minutes.</p>
     <div class="pay-steps">
-      <div class="pay-step">
-        <div class="pay-num">01</div>
-        <div class="pay-title">Choose your watch</div>
-        <div class="pay-text">Browse the collection and click &ldquo;Enquire&rdquo; to chat with us on WhatsApp. We&rsquo;ll confirm availability and reserve your piece.</div>
-      </div>
-      <div class="pay-step">
-        <div class="pay-num">02</div>
-        <div class="pay-title">Get payment details</div>
-        <div class="pay-text">After confirming your order on WhatsApp, we&rsquo;ll send you the exact amount and our M-Pesa business number.</div>
-      </div>
-      <div class="pay-step">
-        <div class="pay-num">03</div>
-        <div class="pay-title">Pay via M-Pesa</div>
-        <div class="pay-text">Go to M-Pesa &rarr; Lipa na M-Pesa &rarr; Pay Bill &rarr; Enter business number &rarr; Enter amount &rarr; Confirm with PIN.</div>
-      </div>
-      <div class="pay-step">
-        <div class="pay-num">04</div>
-        <div class="pay-title">Send confirmation</div>
-        <div class="pay-text">Screenshot your M-Pesa message and send it to us on WhatsApp. Your watch will be packaged and dispatched same day.</div>
-      </div>
+      <div class="pay-step"><div class="pay-num">01</div><div class="pay-title">Choose your watch</div><div class="pay-text">Browse the collection and click &ldquo;Enquire&rdquo; to chat with us on WhatsApp. We&rsquo;ll confirm availability and reserve your piece.</div></div>
+      <div class="pay-step"><div class="pay-num">02</div><div class="pay-title">Get payment details</div><div class="pay-text">After confirming on WhatsApp, we&rsquo;ll send you the exact amount and our M-Pesa business number.</div></div>
+      <div class="pay-step"><div class="pay-num">03</div><div class="pay-title">Pay via M-Pesa</div><div class="pay-text">M-Pesa &rarr; Lipa na M-Pesa &rarr; Pay Bill &rarr; Business number &rarr; Amount &rarr; Confirm with PIN.</div></div>
+      <div class="pay-step"><div class="pay-num">04</div><div class="pay-title">Send confirmation</div><div class="pay-text">Screenshot your M-Pesa message and send it to us. Your watch will be dispatched same day.</div></div>
     </div>
     <div class="pay-cta">
-      <div>
-        <div class="biz-label">M-Pesa Business No.</div>
-        <div class="biz-num">247 247</div>
-      </div>
-      <button class="btn-wa" onclick="openWA('Hi! I want to place an order and make a payment. Please guide me.')">
-        <span>&#128172;</span> Chat to Order Now
-      </button>
+      <div><div class="biz-label">M-Pesa Business No.</div><div class="biz-num" id="bizNoDisplay">247 247</div></div>
+      <button class="btn-wa" onclick="openWA('Hi! I want to place an order and make a payment. Please guide me.')"><span>&#128172;</span> Chat to Order Now</button>
     </div>
   </div>
 </section>
 
-<!-- ═══ ABOUT ═══ -->
 <section id="about">
   <div class="about-grid">
     <div class="about-img">T</div>
@@ -395,8 +252,8 @@ footer{
       <blockquote class="about-quote">&ldquo;I believe a great watch is more than an accessory &mdash; it&rsquo;s a companion to your greatest moments.&rdquo;</blockquote>
       <p style="color:var(--text2);font-size:14px;line-height:1.9;margin-bottom:1rem">Based in Nairobi, we curate timepieces from around the world &mdash; from understated dress watches to bold sport chronographs. Every piece is personally vetted for quality, authenticity, and character.</p>
       <ul class="contact-list">
-        <li><strong>WhatsApp</strong><a href="https://wa.me/254700000000" target="_blank">+254 700 000 000</a></li>
-        <li><strong>Email</strong><a href="mailto:hello@tempowatches.co.ke">hello@tempowatches.co.ke</a></li>
+        <li><strong>WhatsApp</strong><a id="waLink" href="#">+254 700 000 000</a></li>
+        <li><strong>Email</strong><a href="mailto:hello@kmessentials.co.ke">hello@kmessentials.co.ke</a></li>
         <li><strong>Location</strong><span>Nairobi, Kenya</span></li>
         <li><strong>Hours</strong><span>Mon &ndash; Sat, 9am &ndash; 7pm EAT</span></li>
       </ul>
@@ -404,109 +261,82 @@ footer{
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
 <footer>
-  <div class="footer-logo">TEMPO</div>
+  <div class="footer-logo">KM Essentials</div>
   <ul class="footer-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#collection">Shop</a></li>
     <li><a href="#payment">Payment</a></li>
     <li><a href="#about">About</a></li>
   </ul>
-  <div class="footer-copy">&copy; 2026 Tempo Watches &mdash; Nairobi, Kenya</div>
+  <div class="footer-copy">&copy; 2026 KM Essentials &mdash; Nairobi, Kenya</div>
 </footer>
 
-<!-- ═══ MODAL ═══ -->
+<!-- MODAL -->
 <div class="modal-backdrop" id="modal">
-  <div class="modal" id="modalBox">
+  <div class="modal">
     <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
     <div class="modal-inner" id="modalContent"></div>
   </div>
 </div>
 
-<!-- ═══ TOAST ═══ -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ─── CONFIG: Change these to your real details ─── */
-const PHONE   = '254702033077';   // Replace with real WhatsApp number (no + or spaces)
-const BIZ_NO  = 'Contact KM essensials';         // Replace with real M-Pesa Paybill number
-const BRAND   = 'KM essensials';
+/* ══════════════════════════════════════════
+   CONFIG — edit these 3 lines only
+   ══════════════════════════════════════════ */
+const PHONE  = '254700000000';  // WhatsApp number, no + or spaces
+const BIZ_NO = '247247';        // M-Pesa Paybill number
+const BRAND  = 'KM Essentials';         // Your brand name
 
-/* ─── WATCH DATA ─── */
-const watches = [
-  {
-    id:1, name:'Meridian Classic', collection:'Dress', badge:'Bestseller',
-    price:18500, category:'dress',
-    desc:'A timeless dress watch with a silver-brushed dial, domed sapphire crystal, and a slim Italian leather strap. Understated elegance at its finest.',
-    color:'#B8B8B8',
-    specs:{Movement:'Swiss Quartz',Case:'38mm Steel',Crystal:'Sapphire',Strap:'Italian Leather',Water:'30m',Weight:'85g'}
-  },
-  {
-    id:2, name:'Apex Chronograph', collection:'Sport', badge:'New',
-    price:32000, category:'sport',
-    desc:'Built for those who live at pace. Tachymeter bezel, luminous hands, and a robust stainless steel bracelet that handles every adventure.',
-    color:'#1a2035',
-    specs:{Movement:'Japanese Auto',Case:'42mm Steel',Crystal:'Mineral',Strap:'Steel Bracelet',Water:'100m',Weight:'145g'}
-  },
-  {
-    id:3, name:'Aurel Gold', collection:'Luxury', badge:'Limited',
-    price:78000, category:'luxury',
-    desc:'Rose gold case with a champagne sunburst dial. Hand-assembled movement. A statement of heritage and refinement passed down through generations.',
-    color:'#C9A84C',
-    specs:{Movement:'Swiss Automatic',Case:'40mm Rose Gold',Crystal:'Sapphire AR',Strap:'Croco Leather',Water:'50m',Weight:'92g'}
-  },
-  {
-    id:4, name:'Heritage GMT', collection:'Classic', badge:null,
-    price:24500, category:'classic',
-    desc:'Track two time zones with the iconic GMT hand. Vintage-inspired dial with modern reliability — perfect for the frequent traveller.',
-    color:'#2C5F2E',
-    specs:{Movement:'Japanese Quartz',Case:'40mm Steel',Crystal:'Sapphire',Strap:'NATO Nylon',Water:'100m',Weight:'110g'}
-  },
-  {
-    id:5, name:'Solaris Diver', collection:'Sport', badge:null,
-    price:28000, category:'sport',
-    desc:'150m water resistance, unidirectional bezel, and Super-LumiNova hands. From the reef to the rooftop bar — it handles both.',
-    color:'#0a2a4a',
-    specs:{Movement:'Automatic',Case:'44mm Steel',Crystal:'Sapphire',Strap:'Rubber + Steel',Water:'150m',Weight:'165g'}
-  },
-  {
-    id:6, name:'Blanc Minima', collection:'Dress', badge:"Editor's Pick",
-    price:15000, category:'dress',
-    desc:'Less is more. A pure white dial, hairline indexes, and whisper-thin case create a watch that disappears into elegance.',
-    color:'#ddd8cc',
-    specs:{Movement:'Swiss Quartz',Case:'36mm Steel',Crystal:'Sapphire',Strap:'White Satin',Water:'30m',Weight:'72g'}
-  }
-];
+/* ── storage key ── */
+const STORE_KEY = 'km_essentials_v1';
 
-/* ─── STATE ─── */
-let currentFilter = 'all';
+/* ── load watches from localStorage (set by admin panel) ── */
+function loadWatches(){
+  try{
+    var raw = localStorage.getItem(STORE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){return []}
+}
 
-/* ─── HELPERS ─── */
-function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+/* ── state ── */
+var watches = loadWatches();
+var currentFilter = 'all';
+var wishlist = [];
 
-function fmtPrice(p){return 'KES\u00a0' + p.toLocaleString('en-KE')}
+/* ── helpers ── */
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+
+function fmtPrice(p){
+  return 'KES\u00a0' + Number(p).toLocaleString('en-KE');
+}
 
 function openWA(msg){
-  window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
 }
 
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.borderColor = type==='error' ? '#e05555' : 'var(--gold)';
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 3200);
+  setTimeout(function(){t.classList.remove('show')},3200);
 }
 
-/* ─── WATCH SVG ─── */
-function watchSVG(color, size){
-  size = size || 120;
-  const dark = 'rgba(0,0,0,0.28)';
-  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">'
+/* ── watch image: real photo or SVG fallback ── */
+function watchImg(w, size){
+  if(w.image){
+    return '<img src="'+w.image+'" alt="'+w.name+'" style="width:100%;height:100%;object-fit:cover"/>';
+  }
+  var c = w.color || '#B8B8B8';
+  var s = size || 120;
+  return '<div class="watch-svg-wrap"><svg width="'+s+'" height="'+s+'" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">'
     +'<rect x="44" y="7" width="32" height="13" rx="3" fill="rgba(255,255,255,0.06)" stroke="rgba(201,168,76,0.25)" stroke-width="0.5"/>'
     +'<rect x="44" y="100" width="32" height="13" rx="3" fill="rgba(255,255,255,0.06)" stroke="rgba(201,168,76,0.25)" stroke-width="0.5"/>'
-    +'<circle cx="60" cy="60" r="37" fill="'+color+'" stroke="rgba(201,168,76,0.45)" stroke-width="1.5"/>'
-    +'<circle cx="60" cy="60" r="31" fill="'+dark+'" stroke="rgba(201,168,76,0.18)" stroke-width="0.5"/>'
+    +'<circle cx="60" cy="60" r="37" fill="'+c+'" stroke="rgba(201,168,76,0.45)" stroke-width="1.5"/>'
+    +'<circle cx="60" cy="60" r="31" fill="rgba(0,0,0,0.28)" stroke="rgba(201,168,76,0.18)" stroke-width="0.5"/>'
     +'<line x1="60" y1="37" x2="60" y2="43" stroke="rgba(201,168,76,0.9)" stroke-width="1.5" stroke-linecap="round"/>'
     +'<line x1="60" y1="77" x2="60" y2="83" stroke="rgba(201,168,76,0.9)" stroke-width="1.5" stroke-linecap="round"/>'
     +'<line x1="37" y1="60" x2="43" y2="60" stroke="rgba(201,168,76,0.9)" stroke-width="1.5" stroke-linecap="round"/>'
@@ -516,108 +346,135 @@ function watchSVG(color, size){
     +'<line x1="60" y1="60" x2="52" y2="71" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>'
     +'<circle cx="60" cy="60" r="2.8" fill="#C9A84C"/>'
     +'<rect x="108" y="53" width="6" height="14" rx="2" fill="rgba(201,168,76,0.25)" stroke="rgba(201,168,76,0.35)" stroke-width="0.5"/>'
-    +'</svg>';
+    +'</svg></div>';
 }
 
-/* ─── RENDER CARDS ─── */
+/* ── render cards ── */
 function renderCards(){
-  const grid   = document.getElementById('productGrid');
-  const noRes  = document.getElementById('noResults');
-  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  watches = loadWatches();
+  var grid   = document.getElementById('productGrid');
+  var noRes  = document.getElementById('noResults');
+  var empty  = document.getElementById('emptyStore');
+  var search = document.getElementById('searchInput').value.toLowerCase().trim();
 
-  const list = watches.filter(function(w){
-    var matchCat    = currentFilter === 'all' || w.category === currentFilter;
+  /* update stat */
+  document.getElementById('statCount').textContent = watches.length + '+';
+
+  if(watches.length === 0){
+    empty.style.display='block'; grid.innerHTML=''; noRes.style.display='none'; return;
+  }
+  empty.style.display='none';
+
+  var list = watches.filter(function(w){
+    var matchCat    = currentFilter==='all' || w.category===currentFilter;
     var matchSearch = !search
-      || w.name.toLowerCase().includes(search)
-      || w.collection.toLowerCase().includes(search)
-      || w.desc.toLowerCase().includes(search);
+      || (w.name||'').toLowerCase().includes(search)
+      || (w.collection||'').toLowerCase().includes(search)
+      || (w.desc||'').toLowerCase().includes(search);
     return matchCat && matchSearch;
   });
 
-  noRes.style.display = list.length === 0 ? 'block' : 'none';
+  noRes.style.display = list.length===0 ? 'block' : 'none';
 
   grid.innerHTML = list.map(function(w){
-    var badge = w.badge ? '<div class="card-badge">'+w.badge+'</div>' : '';
-    var desc  = w.desc.length > 85 ? w.desc.slice(0,82)+'&hellip;' : w.desc;
-    var waMsg = 'Hi! I\u2019m interested in the '+w.name+' ('+fmtPrice(w.price)+'). Is it available?';
-    return '<div class="product-card" onclick="openModal('+w.id+')">'
+    var badge  = w.badge ? '<div class="card-badge">'+escH(w.badge)+'</div>' : '';
+    var desc   = (w.desc||'').length > 85 ? (w.desc||'').slice(0,82)+'&hellip;' : escH(w.desc||'');
+    var waMsg  = 'Hi! I\u2019m interested in the '+w.name+' ('+fmtPrice(w.price)+'). Is it available?';
+    return '<div class="product-card" onclick="openModal(\''+w.id+'\')">'
       +badge
-      +'<div class="card-img">'
-      +'<div class="watch-svg-wrap">'+watchSVG(w.color,130)+'</div>'
+      +'<div class="card-img">'+watchImg(w,130)
       +'<div class="card-overlay"><button class="overlay-btn">View Details</button></div>'
       +'</div>'
       +'<div class="card-body">'
-      +'<div class="card-collection">'+w.collection+'</div>'
-      +'<div class="card-name">'+w.name+'</div>'
+      +'<div class="card-collection">'+escH(w.collection||'')+'</div>'
+      +'<div class="card-name">'+escH(w.name||'')+'</div>'
       +'<div class="card-desc">'+desc+'</div>'
       +'<div class="card-footer">'
       +'<div class="card-price">'+fmtPrice(w.price)+'</div>'
-      +'<button class="card-wa" onclick="event.stopPropagation();openWA(\''+waMsg.replace(/'/g,"\\'")+'\')" aria-label="Chat on WhatsApp">&#128172;</button>'
-      +'</div>'
-      +'</div>'
-      +'</div>';
+      +'<button class="card-wa" onclick="event.stopPropagation();openWA(\''+waMsg.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')" aria-label="WhatsApp">&#128172;</button>'
+      +'</div></div></div>';
   }).join('');
 }
 
-/* ─── FILTER ─── */
-function setFilter(cat, btn){
-  currentFilter = cat;
+/* ── escape HTML ── */
+function escH(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── filter ── */
+function setFilter(cat,btn){
+  currentFilter=cat;
   document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
   renderCards();
 }
 
-/* ─── MODAL ─── */
+/* ── modal ── */
 function openModal(id){
   var w = watches.find(function(x){return x.id===id});
   if(!w) return;
 
-  var specs = Object.keys(w.specs).map(function(k){
-    return '<div class="spec-item"><div class="spec-key">'+k+'</div><div class="spec-val">'+w.specs[k]+'</div></div>';
-  }).join('');
+  var specs = '';
+  if(w.specs){
+    specs = '<div class="spec-grid">'
+      +Object.keys(w.specs).map(function(k){
+        return '<div class="spec-item"><div class="spec-key">'+escH(k)+'</div><div class="spec-val">'+escH(w.specs[k])+'</div></div>';
+      }).join('')
+      +'</div>';
+  }
 
-  var waEnquire = 'Hi! I\u2019m interested in the '+w.name+' \u2014 '+fmtPrice(w.price)+'. Is it still available?';
-  var waPay     = 'Hi! I\u2019d like to purchase the '+w.name+' for '+fmtPrice(w.price)+'. Please send me the M-Pesa payment details.';
+  var waE = 'Hi! I\u2019m interested in the '+w.name+' \u2014 '+fmtPrice(w.price)+'. Is it still available?';
+  var waP = 'Hi! I\u2019d like to purchase the '+w.name+' for '+fmtPrice(w.price)+'. Please send me M-Pesa payment details.';
 
   document.getElementById('modalContent').innerHTML =
     '<div class="modal-top">'
-    +'<div class="modal-img">'+watchSVG(w.color,170)+'</div>'
+    +'<div class="modal-img">'+watchImg(w,170)+'</div>'
     +'<div class="modal-info">'
-    +'<div class="modal-collection">'+w.collection+' Collection</div>'
-    +'<h2 class="modal-name">'+w.name+'</h2>'
+    +'<div class="modal-collection">'+escH(w.collection||'')+' Collection</div>'
+    +'<h2 class="modal-name">'+escH(w.name||'')+'</h2>'
     +'<div class="modal-price">'+fmtPrice(w.price)+'</div>'
-    +'<p class="modal-desc">'+w.desc+'</p>'
-    +'</div>'
-    +'</div>'
-    +'<div class="spec-grid">'+specs+'</div>'
+    +'<p class="modal-desc">'+escH(w.desc||'')+'</p>'
+    +'</div></div>'
+    +specs
     +'<div class="modal-actions">'
-    +'<button class="btn-wa" onclick="openWA(\''+waEnquire.replace(/'/g,"\\'")+'\')">'
-    +'<span>&#128172;</span>Enquire on WhatsApp</button>'
-    +'<button class="btn-mpesa" onclick="openWA(\''+waPay.replace(/'/g,"\\'")+'\')">'
-    +'Pay via M-Pesa</button>'
-    +'<button class="btn-wishlist" onclick="showToast(\'Added to wishlist \u2713\')">&#9825; Wishlist</button>'
+    +'<button class="btn-wa" onclick="openWA(\''+waE.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')"><span>&#128172;</span>Enquire on WhatsApp</button>'
+    +'<button class="btn-mpesa" onclick="openWA(\''+waP.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">Pay via M-Pesa</button>'
+    +'<button class="btn-wishlist" onclick="toggleWish(\''+w.id+'\',this)">&#9825; Wishlist</button>'
     +'</div>';
 
   document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
+}
+
+function toggleWish(id,btn){
+  var idx=wishlist.indexOf(id);
+  if(idx===-1){wishlist.push(id);btn.textContent='&#9829; Saved';showToast('Added to wishlist \u2713')}
+  else{wishlist.splice(idx,1);btn.innerHTML='&#9825; Wishlist'}
 }
 
 function closeModal(){
   document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
 
-/* Close modal on backdrop click */
-document.getElementById('modal').addEventListener('click', function(e){
-  if(e.target === this) closeModal();
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')closeModal();
 });
 
-/* Close modal on Escape key */
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape') closeModal();
+/* ── update contact links from config ── */
+document.getElementById('waLink').href = 'https://wa.me/'+PHONE;
+document.getElementById('waLink').textContent = '+'+PHONE;
+document.getElementById('bizNoDisplay').textContent = BIZ_NO.replace(/(\d{3})(\d+)/,'$1 $2');
+
+/* ── listen for storage changes (admin updates) ── */
+window.addEventListener('storage',function(e){
+  if(e.key===STORE_KEY) renderCards();
 });
 
-/* ─── INIT ─── */
+/* ── init ── */
 renderCards();
 </script>
 </body>
