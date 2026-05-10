@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KM Essentials Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C96A;--gold-dark:#9A7830;
+  --bg:#0A0A08;--bg2:#111109;--bg3:#181713;--bg4:#1e1d17;
+  --text:#F5F0E8;--text2:#A09880;--text3:#5A5545;
+  --border:rgba(201,168,76,0.15);--border2:rgba(201,168,76,0.3);
+  --green:#2ecc71;--red:#e05555;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── LOGIN ── */
+#loginScreen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  background-image:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(201,168,76,0.06) 0%,transparent 70%);
+}
+.login-box{
+  background:var(--bg2);border:0.5px solid var(--border2);
+  padding:3rem 2.5rem;width:100%;max-width:400px;text-align:center;
+}
+.login-logo{font-family:'Cormorant Garant',serif;font-size:28px;font-weight:600;letter-spacing:0.15em;color:var(--gold);margin-bottom:0.5rem}
+.login-sub{font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:2.5rem}
+.login-box input{
+  width:100%;background:var(--bg3);border:0.5px solid var(--border);
+  color:var(--text);padding:12px 16px;font-family:'DM Sans',sans-serif;
+  font-size:14px;outline:none;margin-bottom:1rem;
+}
+.login-box input:focus{border-color:var(--gold)}
+.login-box input::placeholder{color:var(--text3)}
+.btn-login{
+  width:100%;background:var(--gold);color:#0A0A08;border:none;
+  padding:13px;font-family:'DM Sans',sans-serif;font-size:13px;
+  font-weight:500;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;
+}
+.btn-login:hover{background:var(--gold-light)}
+.login-err{color:var(--red);font-size:12px;margin-top:0.75rem;display:none}
+.login-hint{font-size:11px;color:var(--text3);margin-top:1.5rem}
+
+/* ── ADMIN SHELL ── */
+#adminShell{display:none}
+.admin-nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,10,8,0.96);backdrop-filter:blur(12px);
+  border-bottom:0.5px solid var(--border);
+  padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;
+}
+.admin-logo{font-family:'Cormorant Garant',serif;font-size:18px;font-weight:600;letter-spacing:0.12em;color:var(--gold)}
+.admin-logo span{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-left:10px}
+.nav-btns{display:flex;gap:0.75rem;align-items:center}
+.btn-sm{background:transparent;border:0.5px solid var(--border2);color:var(--text2);padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+.btn-sm:hover{border-color:var(--gold);color:var(--gold)}
+.btn-sm.danger:hover{border-color:var(--red);color:var(--red)}
+.btn-gold{background:var(--gold);color:#0A0A08;border:none;padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
+.btn-gold:hover{background:var(--gold-light)}
+
+/* ── STATS BAR ── */
+.stats-bar{display:flex;gap:1px;background:var(--border);border-bottom:0.5px solid var(--border)}
+.stat-card{background:var(--bg2);padding:1.25rem 2rem;flex:1}
+.stat-card .num{font-family:'Cormorant Garant',serif;font-size:32px;font-weight:300;color:var(--gold)}
+.stat-card .lbl{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-top:2px}
+
+/* ── LAYOUT ── */
+.admin-body{display:grid;grid-template-columns:420px 1fr;min-height:calc(100vh - 60px);gap:0}
+@media(max-width:900px){.admin-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+/* ── FORM PANEL ── */
+.form-panel{background:var(--bg2);border-right:0.5px solid var(--border);padding:2rem;overflow-y:auto}
+.panel-title{font-family:'Cormorant Garant',serif;font-size:22px;font-weight:300;color:var(--text);margin-bottom:1.75rem;display:flex;align-items:center;justify-content:space-between}
+.panel-title button{background:transparent;border:none;color:var(--text3);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:0.08em;text-transform:uppercase}
+.panel-title button:hover{color:var(--text2)}
+
+.field{margin-bottom:1.25rem}
+.field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.field input,.field textarea,.field select{
+  width:100%;background:var(--bg3);border:0.5px solid var(--border);
+  color:var(--text);padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;resize:vertical;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
+.field input::placeholder,.field textarea::placeholder{color:var(--text3)}
+.field select option{background:var(--bg3)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field-hint{font-size:11px;color:var(--text3);margin-top:4px}
+
+/* IMAGE UPLOAD */
+.img-upload{
+  border:0.5px dashed var(--border2);padding:2rem;text-align:center;cursor:pointer;
+  transition:all 0.2s;position:relative;background:var(--bg3);
+}
+.img-upload:hover{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+.img-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.img-upload .up-icon{font-size:28px;margin-bottom:0.5rem;color:var(--text3)}
+.img-upload p{font-size:13px;color:var(--text3)}
+.img-upload p strong{color:var(--gold)}
+.img-preview{width:100%;aspect-ratio:1;object-fit:cover;display:none;border:0.5px solid var(--border)}
+.img-clear{
+  display:none;background:transparent;border:0.5px solid var(--red);
+  color:var(--red);padding:6px 12px;font-size:11px;font-family:'DM Sans',sans-serif;
+  cursor:pointer;margin-top:8px;letter-spacing:0.08em;text-transform:uppercase;
+}
+.img-clear:hover{background:var(--red);color:#fff}
+
+/* SPECS */
+.specs-section{margin-top:1.25rem}
+.specs-title{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:0.75rem}
+.spec-row{display:grid;grid-template-columns:1fr 1fr auto;gap:0.5rem;margin-bottom:0.5rem;align-items:center}
+.spec-row input{padding:8px 10px;font-size:13px}
+.btn-spec-del{background:transparent;border:0.5px solid var(--border);color:var(--text3);width:30px;height:36px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s}
+.btn-spec-del:hover{border-color:var(--red);color:var(--red)}
+.btn-spec-add{background:transparent;border:0.5px solid var(--border);color:var(--text2);padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s;margin-top:0.5rem;letter-spacing:0.06em}
+.btn-spec-add:hover{border-color:var(--gold);color:var(--gold)}
+
+/* FORM ACTIONS */
+.form-actions{display:flex;gap:0.75rem;margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid var(--border)}
+.btn-submit{flex:1;background:var(--gold);color:#0A0A08;border:none;padding:13px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
+.btn-submit:hover{background:var(--gold-light)}
+.btn-cancel{background:transparent;border:0.5px solid var(--border);color:var(--text2);padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s}
+.btn-cancel:hover{border-color:var(--text2);color:var(--text)}
+
+/* ── WATCH LIST ── */
+.list-panel{background:var(--bg);padding:2rem;overflow-y:auto}
+.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.list-title{font-family:'Cormorant Garant',serif;font-size:22px;font-weight:300}
+.list-search{position:relative}
+.list-search input{background:var(--bg2);border:0.5px solid var(--border);color:var(--text);padding:8px 14px 8px 32px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;width:220px}
+.list-search input:focus{border-color:var(--gold)}
+.list-search input::placeholder{color:var(--text3)}
+.ls-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:13px}
+
+/* WATCH ROWS */
+.watch-row{
+  background:var(--bg2);border:0.5px solid var(--border);
+  display:flex;align-items:center;gap:1rem;padding:1rem;
+  margin-bottom:2px;transition:border-color 0.2s;
+}
+.watch-row:hover{border-color:var(--border2)}
+.watch-row.editing{border-color:var(--gold)}
+.row-img{width:60px;height:60px;flex-shrink:0;background:var(--bg3);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.row-img img{width:100%;height:100%;object-fit:cover}
+.row-img .thumb-svg{font-size:28px;color:var(--text3)}
+.row-info{flex:1;min-width:0}
+.row-name{font-family:'Cormorant Garant',serif;font-size:17px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-meta{font-size:12px;color:var(--text3);margin-top:2px}
+.row-price{font-family:'Cormorant Garant',serif;font-size:17px;color:var(--gold);white-space:nowrap}
+.row-actions{display:flex;gap:0.5rem;flex-shrink:0}
+.btn-edit{background:transparent;border:0.5px solid var(--border);color:var(--text2);padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;transition:all 0.2s;letter-spacing:0.06em;text-transform:uppercase}
+.btn-edit:hover,.btn-edit.active{border-color:var(--gold);color:var(--gold)}
+.btn-del{background:transparent;border:0.5px solid var(--border);color:var(--text3);padding:6px 10px;font-size:14px;cursor:pointer;transition:all 0.2s}
+.btn-del:hover{border-color:var(--red);color:var(--red)}
+.btn-toggle{background:transparent;border:0.5px solid var(--border);color:var(--text3);padding:6px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+.btn-toggle.visible{border-color:var(--green);color:var(--green)}
+.btn-toggle.hidden-w{border-color:var(--text3);color:var(--text3)}
+
+/* empty list */
+.list-empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
+.list-empty h3{font-family:'Cormorant Garant',serif;font-size:24px;font-weight:300;margin-bottom:0.5rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);border:0.5px solid var(--gold);color:var(--text);padding:12px 20px;font-size:13px;z-index:999;transform:translateY(80px);opacity:0;transition:all 0.3s}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* CONFIRM DIALOG */
+.confirm-backdrop{position:fixed;inset:0;background:rgba(5,5,4,0.9);z-index:900;display:none;align-items:center;justify-content:center}
+.confirm-backdrop.open{display:flex}
+.confirm-box{background:var(--bg2);border:0.5px solid var(--border2);padding:2rem;max-width:360px;width:90%;text-align:center}
+.confirm-box h3{font-family:'Cormorant Garant',serif;font-size:22px;font-weight:300;margin-bottom:0.75rem}
+.confirm-box p{color:var(--text2);font-size:14px;margin-bottom:1.75rem;line-height:1.6}
+.confirm-actions{display:flex;gap:0.75rem}
+.btn-confirm-del{flex:1;background:var(--red);color:#fff;border:none;padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}
+.btn-confirm-cancel{flex:1;background:transparent;border:0.5px solid var(--border);color:var(--text2);padding:12px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}
+.btn-confirm-cancel:hover{border-color:var(--text2);color:var(--text)}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">KM Essentials</div>
+    <div class="login-sub">Admin Panel</div>
+    <input type="text" id="loginUser" placeholder="Username" autocomplete="username"/>
+    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+    <div class="login-err" id="loginErr">Incorrect username or password</div>
+    <p class="login-hint">Default: admin / kmessentials2024</p>
+  </div>
+</div>
+
+<!-- ══ ADMIN ══ -->
+<div id="adminShell">
+  <nav class="admin-nav">
+    <div class="admin-logo">KM Essentials <span>Admin</span></div>
+    <div class="nav-btns">
+      <button class="btn-sm" onclick="window.open('index.html','_blank')">&#128279; View Site</button>
+      <button class="btn-sm danger" onclick="doLogout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <div class="stats-bar">
+    <div class="stat-card"><div class="num" id="sTotalWatches">0</div><div class="lbl">Total Watches</div></div>
+    <div class="stat-card"><div class="num" id="sVisible">0</div><div class="lbl">Visible</div></div>
+    <div class="stat-card"><div class="num" id="sHidden">0</div><div class="lbl">Hidden</div></div>
+    <div class="stat-card"><div class="num" id="sCategories">0</div><div class="lbl">Categories</div></div>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- FORM PANEL -->
+    <div class="form-panel">
+      <div class="panel-title">
+        <span id="formTitle">Add New Watch</span>
+        <button onclick="resetForm()" id="formResetBtn" style="display:none">&#10005; Cancel Edit</button>
+      </div>
+
+      <!-- IMAGE -->
+      <div class="field">
+        <label>Watch Photo</label>
+        <div class="img-upload" id="imgUploadArea">
+          <input type="file" id="imgFile" accept="image/*" onchange="handleImage(this)"/>
+          <div class="up-icon">&#128247;</div>
+          <p>Drop photo here or <strong>click to upload</strong></p>
+          <p style="font-size:11px;margin-top:4px">JPG, PNG, WEBP &mdash; max 5MB</p>
+        </div>
+        <img class="img-preview" id="imgPreview" alt="Preview"/>
+        <button class="img-clear" id="imgClearBtn" onclick="clearImage()">&#10005; Remove Photo</button>
+      </div>
+
+      <!-- NAME & COLLECTION -->
+      <div class="field-row">
+        <div class="field">
+          <label>Watch Name *</label>
+          <input type="text" id="fName" placeholder="e.g. Meridian Classic"/>
+        </div>
+        <div class="field">
+          <label>Collection</label>
+          <input type="text" id="fCollection" placeholder="e.g. Dress"/>
+        </div>
+      </div>
+
+      <!-- PRICE & CATEGORY -->
+      <div class="field-row">
+        <div class="field">
+          <label>Price (KES) *</label>
+          <input type="number" id="fPrice" placeholder="e.g. 18500" min="0"/>
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="fCategory">
+            <option value="dress">Dress</option>
+            <option value="sport">Sport</option>
+            <option value="classic">Classic</option>
+            <option value="luxury">Luxury</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- BADGE -->
+      <div class="field">
+        <label>Badge <span style="color:var(--text3);font-size:10px;text-transform:none;letter-spacing:0">(optional — e.g. New, Bestseller, Limited)</span></label>
+        <input type="text" id="fBadge" placeholder="Leave blank for no badge"/>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="field">
+        <label>Description *</label>
+        <textarea id="fDesc" rows="4" placeholder="Describe the watch — material, style, who it suits..."></textarea>
+      </div>
+
+      <!-- VISIBILITY -->
+      <div class="field">
+        <label>Visibility</label>
+        <select id="fVisible">
+          <option value="1">Visible on site</option>
+          <option value="0">Hidden (draft)</option>
+        </select>
+        <div class="field-hint">Hidden watches won't appear on the main site.</div>
+      </div>
+
+      <!-- SPECS -->
+      <div class="specs-section">
+        <div class="specs-title">Specifications <span style="color:var(--text3);font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></div>
+        <div id="specRows"></div>
+        <button class="btn-spec-add" onclick="addSpecRow()">+ Add Specification</button>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="form-actions">
+        <button class="btn-submit" id="submitBtn" onclick="saveWatch()">Save Watch</button>
+        <button class="btn-cancel" onclick="resetForm()" id="cancelBtn" style="display:none">Cancel</button>
+      </div>
+    </div>
+
+    <!-- LIST PANEL -->
+    <div class="list-panel">
+      <div class="list-header">
+        <div class="list-title">Watch Inventory</div>
+        <div class="list-search">
+          <span class="ls-icon">&#9906;</span>
+          <input type="text" id="listSearch" placeholder="Search..." oninput="renderList()"/>
+        </div>
+      </div>
+      <div id="watchList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="confirm-backdrop" id="confirmBackdrop">
+  <div class="confirm-box">
+    <h3>Delete Watch?</h3>
+    <p id="confirmMsg">This cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn-confirm-del" id="confirmYes">Delete</button>
+      <button class="btn-confirm-cancel" onclick="closeConfirm()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══ CONFIG ══ */
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'kmessentials2024';   /* Change this to a strong password */
+const STORE_KEY  = 'km_essentials_v1';
+const AUTH_KEY   = 'km_admin_auth';
+
+/* ══ AUTH ══ */
+function doLogin(){
+  var u = document.getElementById('loginUser').value.trim();
+  var p = document.getElementById('loginPass').value;
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    sessionStorage.setItem(AUTH_KEY,'1');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminShell').style.display='block';
+    renderList();
+    updateStats();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('loginPass').value='';
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem(AUTH_KEY);
+  location.reload();
+}
+
+/* check session on load */
+window.addEventListener('DOMContentLoaded',function(){
+  if(sessionStorage.getItem(AUTH_KEY)==='1'){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminShell').style.display='block';
+    renderList();
+    updateStats();
+  }
+  addSpecRow(); /* start with one spec row */
+});
+
+/* ══ STORAGE ══ */
+function loadAll(){
+  try{var r=localStorage.getItem(STORE_KEY);return r?JSON.parse(r):[]}catch(e){return[]}
+}
+function saveAll(arr){
+  localStorage.setItem(STORE_KEY,JSON.stringify(arr));
+  updateStats();
+}
+
+/* ══ IMAGE HANDLING ══ */
+var currentImageB64 = null;
+
+function handleImage(input){
+  var file = input.files[0];
+  if(!file) return;
+  if(file.size > 5*1024*1024){showToast('Image too large — max 5MB','error');return}
+  var reader = new FileReader();
+  reader.onload = function(e){
+    currentImageB64 = e.target.result;
+    var prev = document.getElementById('imgPreview');
+    prev.src = currentImageB64;
+    prev.style.display='block';
+    document.getElementById('imgUploadArea').style.display='none';
+    document.getElementById('imgClearBtn').style.display='inline-block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearImage(){
+  currentImageB64=null;
+  document.getElementById('imgPreview').style.display='none';
+  document.getElementById('imgPreview').src='';
+  document.getElementById('imgClearBtn').style.display='none';
+  document.getElementById('imgUploadArea').style.display='block';
+  document.getElementById('imgFile').value='';
+}
+
+/* ══ SPECS ══ */
+function addSpecRow(key,val){
+  var div=document.createElement('div');
+  div.className='spec-row';
+  div.innerHTML='<input type="text" placeholder="e.g. Movement" value="'+(key||'')+'">'
+    +'<input type="text" placeholder="e.g. Swiss Quartz" value="'+(val||'')+'">'
+    +'<button class="btn-spec-del" onclick="this.parentNode.remove()">&#10005;</button>';
+  document.getElementById('specRows').appendChild(div);
+}
+
+function getSpecs(){
+  var rows=document.querySelectorAll('#specRows .spec-row');
+  var specs={};
+  rows.forEach(function(r){
+    var inputs=r.querySelectorAll('input');
+    var k=(inputs[0].value||'').trim();
+    var v=(inputs[1].value||'').trim();
+    if(k&&v) specs[k]=v;
+  });
+  return Object.keys(specs).length ? specs : null;
+}
+
+/* ══ FORM STATE ══ */
+var editingId = null;
+
+function resetForm(){
+  editingId=null;
+  document.getElementById('fName').value='';
+  document.getElementById('fCollection').value='';
+  document.getElementById('fPrice').value='';
+  document.getElementById('fCategory').value='dress';
+  document.getElementById('fBadge').value='';
+  document.getElementById('fDesc').value='';
+  document.getElementById('fVisible').value='1';
+  document.getElementById('specRows').innerHTML='';
+  addSpecRow();
+  clearImage();
+  document.getElementById('formTitle').textContent='Add New Watch';
+  document.getElementById('submitBtn').textContent='Save Watch';
+  document.getElementById('cancelBtn').style.display='none';
+  document.getElementById('formResetBtn').style.display='none';
+  /* clear editing highlight */
+  document.querySelectorAll('.watch-row').forEach(function(r){r.classList.remove('editing')});
+  document.querySelectorAll('.btn-edit').forEach(function(b){b.classList.remove('active')});
+}
+
+function loadIntoForm(w){
+  editingId=w.id;
+  document.getElementById('fName').value=w.name||'';
+  document.getElementById('fCollection').value=w.collection||'';
+  document.getElementById('fPrice').value=w.price||'';
+  document.getElementById('fCategory').value=w.category||'dress';
+  document.getElementById('fBadge').value=w.badge||'';
+  document.getElementById('fDesc').value=w.desc||'';
+  document.getElementById('fVisible').value=w.visible===false?'0':'1';
+  document.getElementById('specRows').innerHTML='';
+  if(w.specs){Object.keys(w.specs).forEach(function(k){addSpecRow(k,w.specs[k])})}
+  else{addSpecRow()}
+  if(w.image){
+    currentImageB64=w.image;
+    var prev=document.getElementById('imgPreview');
+    prev.src=w.image; prev.style.display='block';
+    document.getElementById('imgUploadArea').style.display='none';
+    document.getElementById('imgClearBtn').style.display='inline-block';
+  } else {clearImage()}
+  document.getElementById('formTitle').textContent='Editing: '+w.name;
+  document.getElementById('submitBtn').textContent='Update Watch';
+  document.getElementById('cancelBtn').style.display='block';
+  document.getElementById('formResetBtn').style.display='inline-block';
+  /* scroll form into view on mobile */
+  document.querySelector('.form-panel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ══ SAVE ══ */
+function saveWatch(){
+  var name  = (document.getElementById('fName').value||'').trim();
+  var price = document.getElementById('fPrice').value;
+  var desc  = (document.getElementById('fDesc').value||'').trim();
+
+  if(!name){showToast('Watch name is required','error');document.getElementById('fName').focus();return}
+  if(!price||isNaN(price)||Number(price)<0){showToast('Please enter a valid price','error');document.getElementById('fPrice').focus();return}
+  if(!desc){showToast('Description is required','error');document.getElementById('fDesc').focus();return}
+
+  var all = loadAll();
+
+  var watch = {
+    id        : editingId || 'w_'+Date.now(),
+    name      : name,
+    collection: (document.getElementById('fCollection').value||'').trim() || 'General',
+    price     : Number(price),
+    category  : document.getElementById('fCategory').value,
+    badge     : (document.getElementById('fBadge').value||'').trim() || null,
+    desc      : desc,
+    visible   : document.getElementById('fVisible').value==='1',
+    image     : currentImageB64 || null,
+    specs     : getSpecs(),
+    color     : '#B8B8B8',
+    updatedAt : new Date().toISOString()
+  };
+
+  if(editingId){
+    var idx=all.findIndex(function(x){return x.id===editingId});
+    if(idx>-1) all[idx]=watch; else all.push(watch);
+    showToast('Watch updated \u2713');
+  } else {
+    watch.createdAt=watch.updatedAt;
+    all.push(watch);
+    showToast('Watch added \u2713');
+  }
+
+  saveAll(all);
+  resetForm();
+  renderList();
+}
+
+/* ══ RENDER LIST ══ */
+function renderList(){
+  var all    = loadAll();
+  var search = (document.getElementById('listSearch').value||'').toLowerCase().trim();
+  var list   = all.filter(function(w){
+    return !search
+      || (w.name||'').toLowerCase().includes(search)
+      || (w.collection||'').toLowerCase().includes(search);
+  });
+
+  var el=document.getElementById('watchList');
+  if(all.length===0){
+    el.innerHTML='<div class="list-empty"><h3>No watches yet</h3><p>Add your first watch using the form on the left.</p></div>';
+    return;
+  }
+  if(list.length===0){
+    el.innerHTML='<div class="list-empty"><h3>No results</h3><p>Try a different search.</p></div>';
+    return;
+  }
+
+  el.innerHTML=list.map(function(w){
+    var thumb = w.image
+      ? '<img src="'+w.image+'" alt="'+escH(w.name)+'" style="width:100%;height:100%;object-fit:cover"/>'
+      : '<span class="thumb-svg">&#8987;</span>';
+    var vis = w.visible!==false;
+    return '<div class="watch-row'+(editingId===w.id?' editing':'')+'" id="row_'+w.id+'">'
+      +'<div class="row-img">'+thumb+'</div>'
+      +'<div class="row-info">'
+      +'<div class="row-name">'+escH(w.name)+'</div>'
+      +'<div class="row-meta">'+escH(w.collection||'')+' &middot; '+escH(w.category||'')+(w.badge?' &middot; '+escH(w.badge):'')+'</div>'
+      +'</div>'
+      +'<div class="row-price">KES '+Number(w.price).toLocaleString('en-KE')+'</div>'
+      +'<div class="row-actions">'
+      +'<button class="btn-toggle '+(vis?'visible':'hidden-w')+'" onclick="toggleVisible(\''+w.id+'\')" title="'+(vis?'Click to hide':'Click to show')+'">'+(vis?'&#9679; On':'&#9675; Off')+'</button>'
+      +'<button class="btn-edit'+(editingId===w.id?' active':'')+'" onclick="editWatch(\''+w.id+'\')">Edit</button>'
+      +'<button class="btn-del" onclick="confirmDelete(\''+w.id+'\',\''+escH(w.name)+'\')" title="Delete">&#10005;</button>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function escH(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ══ ACTIONS ══ */
+function editWatch(id){
+  var all=loadAll();
+  var w=all.find(function(x){return x.id===id});
+  if(w) loadIntoForm(w);
+  renderList();
+}
+
+function toggleVisible(id){
+  var all=loadAll();
+  var idx=all.findIndex(function(x){return x.id===id});
+  if(idx>-1){
+    all[idx].visible=!(all[idx].visible!==false);
+    saveAll(all);
+    renderList();
+    showToast(all[idx].visible ? 'Watch is now visible \u2713' : 'Watch hidden');
+  }
+}
+
+var pendingDeleteId=null;
+function confirmDelete(id,name){
+  pendingDeleteId=id;
+  document.getElementById('confirmMsg').textContent='Delete "'+name+'"? This cannot be undone.';
+  document.getElementById('confirmBackdrop').classList.add('open');
+}
+function closeConfirm(){
+  pendingDeleteId=null;
+  document.getElementById('confirmBackdrop').classList.remove('open');
+}
+document.getElementById('confirmYes').onclick=function(){
+  if(!pendingDeleteId) return;
+  var all=loadAll().filter(function(x){return x.id!==pendingDeleteId});
+  saveAll(all);
+  if(editingId===pendingDeleteId) resetForm();
+  closeConfirm();
+  renderList();
+  showToast('Watch deleted');
+};
+
+/* ══ STATS ══ */
+function updateStats(){
+  var all=loadAll();
+  var vis=all.filter(function(w){return w.visible!==false}).length;
+  var cats=new Set(all.map(function(w){return w.category})).size;
+  document.getElementById('sTotalWatches').textContent=all.length;
+  document.getElementById('sVisible').textContent=vis;
+  document.getElementById('sHidden').textContent=all.length-vis;
+  document.getElementById('sCategories').textContent=cats;
+}
+
+/* ══ TOAST ══ */
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.borderColor=type==='error'?'var(--red)':'var(--gold)';
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},3200);
+}
+
+/* enter key on login */
+document.getElementById('loginUser').addEventListener('keydown',function(e){
+  if(e.key==='Enter') document.getElementById('loginPass').focus();
+});
+</script>
+</body>
+</html>
