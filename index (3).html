@@ -176,13 +176,50 @@ footer{padding:3rem 2rem 2rem;border-top:1px solid var(--border);display:flex;ju
 .toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);border:1px solid var(--gold);color:var(--text);padding:13px 22px;font-size:13px;z-index:500;transform:translateY(80px);opacity:0;transition:all 0.3s;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
 .toast.show{transform:translateY(0);opacity:1}
 
+/* DUAL IMAGE — card second image peek */
+.card-img-wrap{position:relative;width:100%;aspect-ratio:1;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--bg3)}
+.card-img-main{position:absolute;inset:0;transition:opacity 0.5s,transform 0.5s;z-index:2}
+.card-img-main img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s}
+.card-img-bg{position:absolute;inset:0;z-index:1;overflow:hidden}
+.card-img-bg img{width:100%;height:100%;object-fit:cover;filter:blur(3px) brightness(0.5);transform:scale(1.08)}
+.product-card:hover .card-img-main img{transform:scale(1.07)}
+.card-img-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:4}
+.card-img-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s}
+.card-img-dot.active{background:var(--gold);border-color:var(--gold);transform:scale(1.2)}
+
+/* MODAL GALLERY */
+.modal-gallery{display:flex;flex-direction:column;gap:0.75rem;flex-shrink:0}
+.modal-main-img{width:240px;aspect-ratio:1;border-radius:var(--r);border:1px solid var(--border);overflow:hidden;background:var(--bg3);cursor:zoom-in;position:relative}
+.modal-main-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
+.modal-main-img:hover img{transform:scale(1.04)}
+.modal-thumbs{display:flex;gap:0.5rem}
+.modal-thumb{width:58px;height:58px;border-radius:var(--r-sm);border:1.5px solid var(--border);overflow:hidden;cursor:pointer;transition:all 0.2s;flex-shrink:0;background:var(--bg3)}
+.modal-thumb img{width:100%;height:100%;object-fit:cover}
+.modal-thumb.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.modal-thumb:hover{border-color:var(--border2)}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(5,5,4,0.97);z-index:400;display:none;align-items:center;justify-content:center;padding:2rem}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:88vh;object-fit:contain;border-radius:var(--r);box-shadow:0 32px 80px rgba(0,0,0,0.8)}
+.lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.08);border:none;color:var(--text2);font-size:22px;cursor:pointer;padding:8px 13px;border-radius:50%;transition:all 0.2s}
+.lightbox-close:hover{background:rgba(201,168,76,0.2);color:var(--gold)}
+.lightbox-caption{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-size:12px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+
+/* ABOUT LOGO */
+.about-logo-wrap{aspect-ratio:3/4;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.about-logo-img{width:100%;height:100%;object-fit:contain;padding:2rem}
+.about-logo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;height:100%;text-align:center;padding:2rem}
+.about-logo-placeholder .km-text{font-family:'Cormorant Garant',serif;font-size:72px;font-weight:300;color:rgba(201,168,76,0.15);font-style:italic;line-height:1}
+.about-logo-placeholder p{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3)}
+
 /* RESPONSIVE */
 @media(max-width:720px){
   .nav-links{display:none}
   .hero-stats{flex-direction:column;gap:1.5rem;align-items:center}
   .about-grid{grid-template-columns:1fr}
   .modal-top{flex-direction:column}
-  .modal-img{width:100%;min-width:unset}
+  .modal-main-img{width:100%}
   footer{flex-direction:column;text-align:center}
   .product-grid{gap:1rem}
   .hero-btns{flex-direction:column;align-items:center}
@@ -224,7 +261,7 @@ footer{padding:3rem 2rem 2rem;border-top:1px solid var(--border);display:flex;ju
     <div class="hero-stats">
       <div><div class="stat-num" id="statCount">0+</div><div class="stat-lbl">Timepieces</div></div>
       <div><div class="stat-num">5 &#9733;</div><div class="stat-lbl">Rated</div></div>
-      <div><div class="stat-num">3yr</div><div class="stat-lbl">Warranty</div></div>
+      <div><div class="stat-num">NBO</div><div class="stat-lbl">Nairobi, Kenya</div></div>
     </div>
   </div>
 </section>
@@ -270,7 +307,13 @@ footer{padding:3rem 2rem 2rem;border-top:1px solid var(--border);display:flex;ju
 
 <section id="about">
   <div class="about-grid">
-    <div class="about-img">KM</div>
+    <div class="about-logo-wrap" id="aboutLogoWrap">
+      <div class="about-logo-placeholder" id="aboutLogoPlaceholder">
+        <div class="km-text">KM</div>
+        <p>Logo coming soon</p>
+      </div>
+      <img id="aboutLogoImg" class="about-logo-img" src="" alt="KM Essentials Logo" style="display:none"/>
+    </div>
     <div>
       <div class="section-label">Our Story</div>
       <h2 class="section-title" style="margin-bottom:1.5rem">Passion for<br/>fine time</h2>
@@ -296,6 +339,12 @@ footer{padding:3rem 2rem 2rem;border-top:1px solid var(--border);display:flex;ju
   </ul>
   <div class="footer-copy">&copy; 2026 KM Essentials &mdash; Nairobi, Kenya</div>
 </footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightboxImg" src="" alt="Watch photo"/>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
 
 <div class="modal-backdrop" id="modal">
   <div class="modal">
@@ -347,9 +396,7 @@ function showToast(msg,type){
   setTimeout(function(){t.classList.remove('show')},3200);
 }
 
-function watchImg(w,size){
-  if(w.image_url) return '<img src="'+escH(w.image_url)+'" alt="'+escH(w.name)+'" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>';
-  var c=w.color||'#B8B8B8'; var s=size||120;
+function watchSVG(c,s){
   return '<div class="watch-svg-wrap"><svg width="'+s+'" height="'+s+'" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">'
     +'<rect x="44" y="7" width="32" height="13" rx="3" fill="rgba(255,255,255,0.06)" stroke="rgba(201,168,76,0.25)" stroke-width="0.5"/>'
     +'<rect x="44" y="100" width="32" height="13" rx="3" fill="rgba(255,255,255,0.06)" stroke="rgba(201,168,76,0.25)" stroke-width="0.5"/>'
@@ -367,6 +414,76 @@ function watchImg(w,size){
     +'</svg></div>';
 }
 
+function watchImg(w,size){
+  if(w.image_url) return '<img src="'+escH(w.image_url)+'" alt="'+escH(w.name)+'" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>';
+  return watchSVG(w.color||'#B8B8B8', size||120);
+}
+
+/* ── Card image wrap — shows second image as blurred background ── */
+function cardImgHtml(w){
+  var imgs = getImgs(w);
+  if(imgs.length===0) return '<div class="card-img-wrap">'+watchSVG(w.color||'#B8B8B8',130)+'</div>';
+  var bgHtml = imgs.length>1
+    ? '<div class="card-img-bg"><img src="'+escH(imgs[1])+'" alt="" loading="lazy"/></div>'
+    : '';
+  var dots = imgs.length>1
+    ? '<div class="card-img-dots">'
+      +'<div class="card-img-dot active" id="dot_'+w.id+'_0"></div>'
+      +'<div class="card-img-dot" id="dot_'+w.id+'_1"></div>'
+      +'</div>'
+    : '';
+  return '<div class="card-img-wrap" id="cwrap_'+w.id+'">'
+    +bgHtml
+    +'<div class="card-img-main" id="cmain_'+w.id+'">'
+    +'<img src="'+escH(imgs[0])+'" alt="'+escH(w.name)+'" loading="lazy" id="cimg_'+w.id+'"/>'
+    +'</div>'
+    +'<div class="card-overlay"><button class="overlay-btn">View Details</button></div>'
+    +dots
+    +'</div>';
+}
+
+/* returns array of image urls for a watch */
+function getImgs(w){
+  var imgs=[];
+  if(w.image_url) imgs.push(w.image_url);
+  if(w.image_url2) imgs.push(w.image_url2);
+  return imgs;
+}
+
+/* switch image on card dot click */
+function switchCardImg(wid,idx,imgs){
+  var el=document.getElementById('cimg_'+wid);
+  if(el) el.src=imgs[idx];
+  [0,1].forEach(function(i){
+    var d=document.getElementById('dot_'+wid+'_'+i);
+    if(d) d.classList.toggle('active',i===idx);
+  });
+}
+
+/* ── Lightbox ── */
+function openLightbox(src,caption){
+  document.getElementById('lightboxImg').src=src;
+  document.getElementById('lightboxCaption').textContent=caption||'';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeLightbox(); closeModal(); } });
+
+/* ── Logo in About ── */
+function loadLogo(){
+  var url=localStorage.getItem('km_logo_url');
+  if(url){
+    var img=document.getElementById('aboutLogoImg');
+    var ph=document.getElementById('aboutLogoPlaceholder');
+    img.src=url; img.style.display='block'; ph.style.display='none';
+  }
+}
+window.addEventListener('storage',function(e){ if(e.key==='km_logo_url') loadLogo(); });
+
 function renderCards(){
   var grid=document.getElementById('productGrid'),noRes=document.getElementById('noResults'),empty=document.getElementById('emptyStore');
   var search=document.getElementById('searchInput').value.toLowerCase().trim();
@@ -382,8 +499,10 @@ function renderCards(){
     var badge=w.badge?'<div class="card-badge">'+escH(w.badge)+'</div>':'';
     var desc=(w.description||'').length>85?(w.description||'').slice(0,82)+'&hellip;':escH(w.description||'');
     var waMsg='Hi! I\u2019m interested in the '+w.name+' ('+fmtPrice(w.price)+'). Is it available?';
-    return '<div class="product-card" onclick="openModal(\''+w.id+'\')">'+badge
-      +'<div class="card-img">'+watchImg(w,130)+'<div class="card-overlay"><button class="overlay-btn">View Details</button></div></div>'
+    var imgs=getImgs(w);
+    var imgsJson=JSON.stringify(imgs).replace(/'/g,"\\'");
+    return '<div class="product-card" onclick="openModal(\''+w.id+'\')">'
+      +badge+cardImgHtml(w)
       +'<div class="card-body"><div class="card-collection">'+escH(w.collection||'')+'</div>'
       +'<div class="card-name">'+escH(w.name||'')+'</div>'
       +'<div class="card-desc">'+desc+'</div>'
@@ -391,6 +510,19 @@ function renderCards(){
       +'<button class="card-wa" onclick="event.stopPropagation();openWA(\''+waMsg.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\');trackEvent(\'enquiry\',\''+escH(w.name)+'\')" aria-label="WhatsApp">&#128172;</button>'
       +'</div></div></div>';
   }).join('');
+  /* attach dot switchers after render */
+  list.forEach(function(w){
+    var imgs=getImgs(w);
+    if(imgs.length>1){
+      [0,1].forEach(function(i){
+        var d=document.getElementById('dot_'+w.id+'_'+i);
+        if(d) d.addEventListener('click',function(e){
+          e.stopPropagation();
+          switchCardImg(w.id,i,imgs);
+        });
+      });
+    }
+  });
 }
 
 function setFilter(cat,btn){
@@ -403,17 +535,46 @@ function setFilter(cat,btn){
 function openModal(id){
   var w=watches.find(function(x){return String(x.id)===String(id)});
   if(!w) return;
+  var imgs=getImgs(w);
+  var activeImg=imgs.length>0?imgs[0]:null;
+
+  /* gallery HTML */
+  var galleryHtml='';
+  if(imgs.length>0){
+    var thumbsHtml='';
+    if(imgs.length>1){
+      thumbsHtml='<div class="modal-thumbs">'
+        +imgs.map(function(src,i){
+          return '<div class="modal-thumb'+(i===0?' active':'')+'" id="mthumb_'+i+'" onclick="switchModalImg(\''+escH(src)+'\','+i+','+imgs.length+')">'
+            +'<img src="'+escH(src)+'" alt="View '+(i+1)+'"/>'
+            +'</div>';
+        }).join('')
+        +'</div>';
+    }
+    galleryHtml='<div class="modal-gallery">'
+      +'<div class="modal-main-img" id="modalMainImg" onclick="openLightbox(document.getElementById(\'modalActiveImg\').src,\''+escH(w.name)+'\')">'
+      +'<img id="modalActiveImg" src="'+escH(imgs[0])+'" alt="'+escH(w.name)+'"/>'
+      +'</div>'
+      +thumbsHtml
+      +'</div>';
+  } else {
+    galleryHtml='<div class="modal-gallery"><div class="modal-main-img">'+watchSVG(w.color||'#B8B8B8',200)+'</div></div>';
+  }
+
+  /* specs */
   var specs='';
-  if(w.specs&&typeof w.specs==='object'){
+  if(w.specs&&typeof w.specs==='object'&&Object.keys(w.specs).length){
     specs='<div class="spec-grid">'+Object.keys(w.specs).map(function(k){
       return '<div class="spec-item"><div class="spec-key">'+escH(k)+'</div><div class="spec-val">'+escH(w.specs[k])+'</div></div>';
     }).join('')+'</div>';
   }
+
   var inWish=wishlist.includes(w.id);
   var waE='Hi! I\u2019m interested in the '+w.name+' \u2014 '+fmtPrice(w.price)+'. Is it still available?';
   var waP='Hi! I\u2019d like to purchase the '+w.name+' for '+fmtPrice(w.price)+'. Please send me M-Pesa payment details.';
+
   document.getElementById('modalContent').innerHTML=
-    '<div class="modal-top"><div class="modal-img">'+watchImg(w,170)+'</div>'
+    '<div class="modal-top">'+galleryHtml
     +'<div class="modal-info"><div class="modal-collection">'+escH(w.collection||'')+' Collection</div>'
     +'<h2 class="modal-name">'+escH(w.name||'')+'</h2>'
     +'<div class="modal-price">'+fmtPrice(w.price)+'</div>'
@@ -424,9 +585,19 @@ function openModal(id){
     +'<button class="btn-mpesa" onclick="openWA(\''+waP.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\');trackEvent(\'payment_intent\',\''+escH(w.name)+'\')">Pay via M-Pesa</button>'
     +'<button class="btn-wishlist" id="wishBtn_'+w.id+'" onclick="toggleWish(\''+w.id+'\')">'+(inWish?'&#9829; Saved':'&#9825; Wishlist')+'</button>'
     +'</div>';
+
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
   trackEvent('view_item',w.name);
+}
+
+function switchModalImg(src,idx,total){
+  var img=document.getElementById('modalActiveImg');
+  if(img) img.src=src;
+  for(var i=0;i<total;i++){
+    var t=document.getElementById('mthumb_'+i);
+    if(t) t.classList.toggle('active',i===idx);
+  }
 }
 
 function toggleWish(id){
@@ -439,9 +610,9 @@ function toggleWish(id){
 
 function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow=''}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 
 loadWatches();
+loadLogo();
 </script>
 </body>
 </html>

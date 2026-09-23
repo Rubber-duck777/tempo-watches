@@ -231,18 +231,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <button onclick="resetForm()" id="formResetBtn" style="display:none">&#10005; Cancel</button>
         </div>
 
-        <div class="field">
-          <label>Watch Photo</label>
-          <div class="img-upload" id="imgUploadArea">
-            <input type="file" id="imgFile" accept="image/*" onchange="handleImage(this)"/>
-            <div class="up-icon">&#128247;</div>
-            <p>Drop photo or <strong>click to upload</strong></p>
-            <p style="font-size:11px;margin-top:4px">JPG, PNG, WEBP &mdash; max 5MB</p>
+        <div class="field-row">
+          <!-- PHOTO 1 -->
+          <div class="field">
+            <label>Main Photo <span style="color:var(--gold);font-size:9px">&#9733; Primary</span></label>
+            <div class="img-upload" id="imgUploadArea">
+              <input type="file" id="imgFile" accept="image/*" onchange="handleImage(this,1)"/>
+              <div class="up-icon">&#128247;</div>
+              <p style="font-size:12px">Main photo</p>
+            </div>
+            <div class="img-progress" id="imgProgress"><div class="img-progress-bar" id="imgProgressBar"></div></div>
+            <img class="img-preview" id="imgPreview" alt="Main photo" style="aspect-ratio:1"/>
+            <button class="img-clear" id="imgClearBtn" onclick="clearImage(1)" style="font-size:10px;padding:5px 10px">&#10005; Remove</button>
           </div>
-          <div class="img-progress" id="imgProgress"><div class="img-progress-bar" id="imgProgressBar"></div></div>
-          <img class="img-preview" id="imgPreview" alt="Preview"/>
-          <div class="img-url-display" id="imgUrlDisplay"></div>
-          <button class="img-clear" id="imgClearBtn" onclick="clearImage()">&#10005; Remove Photo</button>
+          <!-- PHOTO 2 -->
+          <div class="field">
+            <label>Second Photo <span style="color:var(--text3);font-size:9px">Optional</span></label>
+            <div class="img-upload" id="imgUploadArea2">
+              <input type="file" id="imgFile2" accept="image/*" onchange="handleImage(this,2)"/>
+              <div class="up-icon" style="font-size:20px">&#43;</div>
+              <p style="font-size:12px">Second angle</p>
+            </div>
+            <div class="img-progress" id="imgProgress2"><div class="img-progress-bar" id="imgProgressBar2"></div></div>
+            <img class="img-preview" id="imgPreview2" alt="Second photo" style="aspect-ratio:1"/>
+            <button class="img-clear" id="imgClearBtn2" onclick="clearImage(2)" style="font-size:10px;padding:5px 10px">&#10005; Remove</button>
+          </div>
         </div>
 
         <div class="field-row">
@@ -381,6 +394,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <p>Download all orders as a CSV file for record keeping or sharing.</p>
         <button class="btn-submit" style="margin-top:0.5rem;max-width:180px" onclick="exportOrders()">&#8659; Export CSV</button>
       </div>
+      <div class="settings-card">
+        <h3>Company Logo</h3>
+        <div class="settings-badge badge-info">Branding</div>
+        <p>Upload your logo to display it in the About section of the site. Best results with a square or portrait image on a transparent or dark background.</p>
+        <div id="logoPreviewWrap" style="display:none;margin-bottom:1rem">
+          <img id="logoSettingsPreview" src="" alt="Logo" style="max-width:120px;max-height:120px;object-fit:contain;border:1px solid var(--border);border-radius:var(--r-sm);padding:0.5rem;background:var(--bg3)"/>
+        </div>
+        <div class="img-upload" id="logoUploadArea" style="padding:1.25rem">
+          <input type="file" id="logoFile" accept="image/*" onchange="handleLogo(this)"/>
+          <div class="up-icon" style="font-size:20px">&#128444;</div>
+          <p style="font-size:12px">Upload logo</p>
+        </div>
+        <div class="img-progress" id="logoProgress" style="margin-top:6px"><div class="img-progress-bar" id="logoProgressBar"></div></div>
+        <button class="img-clear" id="logoClearBtn" onclick="clearLogo()" style="margin-top:8px;display:none">&#10005; Remove Logo</button>
+      </div>
     </div>
   </div>
 
@@ -480,55 +508,110 @@ function sbHeaders(extra){
 async function sbFetch(path,opts){ return fetch(SUPABASE_URL+path, Object.assign({headers:sbHeaders()},opts||{})) }
 
 /* ══ CLOUDINARY UPLOAD ══ */
-async function uploadToCloudinary(file){
+async function uploadToCloudinary(file, bar){
   var fd = new FormData();
   fd.append('file', file);
   fd.append('upload_preset', CLOUDINARY_PRESET);
-  var prog = document.getElementById('imgProgress');
-  var bar  = document.getElementById('imgProgressBar');
-  prog.style.display = 'block';
-  bar.style.width = '20%';
+  if(bar) bar.style.width='50%';
   var res = await fetch('https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/image/upload', { method:'POST', body:fd });
-  bar.style.width = '100%';
-  setTimeout(function(){ prog.style.display='none'; bar.style.width='0%' }, 600);
+  if(bar){ bar.style.width='100%'; setTimeout(function(){bar.style.width='0%'},600) }
   if(!res.ok) throw new Error('Cloudinary upload failed');
   var data = await res.json();
   return data.secure_url;
 }
 
-/* ══ IMAGE HANDLING ══ */
-var currentImageUrl = null;
+/* ══ IMAGE HANDLING — dual photo ══ */
+var currentImageUrl  = null;
+var currentImageUrl2 = null;
 
-async function handleImage(input){
+async function handleImage(input, slot){
   var file = input.files[0];
   if(!file) return;
   if(file.size > 5*1024*1024){ showToast('Image too large — max 5MB','error'); return }
   var btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Uploading...';
+  var progWrap = document.getElementById('imgProgress'+(slot===2?'2':''));
+  var progBar  = document.getElementById('imgProgressBar'+(slot===2?'2':''));
+  if(progWrap) progWrap.style.display='block';
+  if(progBar)  progBar.style.width='20%';
   try {
-    var url = await uploadToCloudinary(file);
-    currentImageUrl = url;
-    var prev = document.getElementById('imgPreview');
-    prev.src = url; prev.style.display='block';
-    document.getElementById('imgUploadArea').style.display='none';
-    document.getElementById('imgClearBtn').style.display='inline-block';
-    document.getElementById('imgUrlDisplay').textContent = url;
-    document.getElementById('imgUrlDisplay').style.display = 'block';
-    showToast('Photo uploaded \u2713');
+    var url = await uploadToCloudinary(file, progBar);
+    if(slot===2){
+      currentImageUrl2 = url;
+      var p2=document.getElementById('imgPreview2');
+      p2.src=url; p2.style.display='block';
+      document.getElementById('imgUploadArea2').style.display='none';
+      document.getElementById('imgClearBtn2').style.display='inline-block';
+    } else {
+      currentImageUrl = url;
+      var p1=document.getElementById('imgPreview');
+      p1.src=url; p1.style.display='block';
+      document.getElementById('imgUploadArea').style.display='none';
+      document.getElementById('imgClearBtn').style.display='inline-block';
+    }
+    showToast('Photo '+(slot===2?'2 ':'')+'uploaded \u2713');
   } catch(e) {
-    showToast('Upload failed. Check your Cloudinary preset name.','error');
+    showToast('Upload failed. Check your Cloudinary preset.','error');
   }
+  if(progWrap) setTimeout(function(){progWrap.style.display='none'},600);
   btn.disabled = false; btn.textContent = editingId ? 'Update Watch' : 'Save Watch';
 }
 
-function clearImage(){
-  currentImageUrl = null;
-  var prev = document.getElementById('imgPreview');
-  prev.style.display='none'; prev.src='';
-  document.getElementById('imgClearBtn').style.display='none';
-  document.getElementById('imgUploadArea').style.display='block';
-  document.getElementById('imgFile').value='';
-  document.getElementById('imgUrlDisplay').style.display='none';
+function clearImage(slot){
+  if(slot===2){
+    currentImageUrl2=null;
+    var p=document.getElementById('imgPreview2'); p.style.display='none'; p.src='';
+    document.getElementById('imgClearBtn2').style.display='none';
+    document.getElementById('imgUploadArea2').style.display='block';
+    document.getElementById('imgFile2').value='';
+  } else {
+    currentImageUrl=null;
+    var p=document.getElementById('imgPreview'); p.style.display='none'; p.src='';
+    document.getElementById('imgClearBtn').style.display='none';
+    document.getElementById('imgUploadArea').style.display='block';
+    document.getElementById('imgFile').value='';
+  }
+}
+
+/* ══ LOGO UPLOAD ══ */
+async function handleLogo(input){
+  var file=input.files[0];
+  if(!file) return;
+  if(file.size>5*1024*1024){showToast('Logo too large — max 5MB','error');return}
+  var prog=document.getElementById('logoProgress');
+  var bar =document.getElementById('logoProgressBar');
+  prog.style.display='block'; bar.style.width='20%';
+  try {
+    var url=await uploadToCloudinary(file,bar);
+    localStorage.setItem('km_logo_url',url);
+    var prev=document.getElementById('logoSettingsPreview');
+    prev.src=url;
+    document.getElementById('logoPreviewWrap').style.display='block';
+    document.getElementById('logoUploadArea').style.display='none';
+    document.getElementById('logoClearBtn').style.display='inline-block';
+    showToast('Logo uploaded \u2713');
+  } catch(e){ showToast('Logo upload failed','error') }
+  setTimeout(function(){prog.style.display='none'},600);
+}
+
+function clearLogo(){
+  localStorage.removeItem('km_logo_url');
+  document.getElementById('logoSettingsPreview').src='';
+  document.getElementById('logoPreviewWrap').style.display='none';
+  document.getElementById('logoUploadArea').style.display='block';
+  document.getElementById('logoClearBtn').style.display='none';
+  document.getElementById('logoFile').value='';
+  showToast('Logo removed');
+}
+
+function loadLogoSettings(){
+  var url=localStorage.getItem('km_logo_url');
+  if(url){
+    document.getElementById('logoSettingsPreview').src=url;
+    document.getElementById('logoPreviewWrap').style.display='block';
+    document.getElementById('logoUploadArea').style.display='none';
+    document.getElementById('logoClearBtn').style.display='inline-block';
+  }
 }
 
 /* ══ SPECS ══ */
@@ -562,7 +645,7 @@ function resetForm(){
   document.getElementById('fVisible').value='1';
   document.getElementById('specRows').innerHTML='';
   addSpecRow();
-  clearImage();
+  clearImage(1); clearImage(2);
   document.getElementById('formTitle').textContent='Add New Watch';
   document.getElementById('submitBtn').textContent='Save Watch';
   document.getElementById('cancelBtn').style.display='none';
@@ -583,8 +666,9 @@ function loadIntoForm(w){
   document.getElementById('specRows').innerHTML='';
   if(w.specs&&typeof w.specs==='object') Object.keys(w.specs).forEach(function(k){addSpecRow(k,w.specs[k])});
   else addSpecRow();
-  if(w.image_url){ currentImageUrl=w.image_url; var p=document.getElementById('imgPreview'); p.src=w.image_url; p.style.display='block'; document.getElementById('imgUploadArea').style.display='none'; document.getElementById('imgClearBtn').style.display='inline-block'; document.getElementById('imgUrlDisplay').textContent=w.image_url; document.getElementById('imgUrlDisplay').style.display='block'; }
-  else clearImage();
+  clearImage(1); clearImage(2);
+  if(w.image_url){ currentImageUrl=w.image_url; var p1=document.getElementById('imgPreview'); p1.src=w.image_url; p1.style.display='block'; document.getElementById('imgUploadArea').style.display='none'; document.getElementById('imgClearBtn').style.display='inline-block'; }
+  if(w.image_url2){ currentImageUrl2=w.image_url2; var p2=document.getElementById('imgPreview2'); p2.src=w.image_url2; p2.style.display='block'; document.getElementById('imgUploadArea2').style.display='none'; document.getElementById('imgClearBtn2').style.display='inline-block'; }
   document.getElementById('formTitle').textContent='Editing: '+w.name;
   document.getElementById('submitBtn').textContent='Update Watch';
   document.getElementById('cancelBtn').style.display='block';
@@ -613,6 +697,7 @@ async function saveWatch(){
     description: desc,
     visible    : document.getElementById('fVisible').value==='1',
     image_url  : currentImageUrl||null,
+    image_url2 : currentImageUrl2||null,
     specs      : getSpecs()
   };
 
@@ -799,7 +884,7 @@ function showToast(msg,type){
 }
 
 /* ══ INIT ══ */
-function init(){ loadInventory(); addSpecRow() }
+function init(){ loadInventory(); addSpecRow(); loadLogoSettings(); }
 </script>
 </body>
 </html>
