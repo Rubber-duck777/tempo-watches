@@ -95,12 +95,11 @@ section{padding:5rem 2rem}
 .product-card:hover .card-overlay{opacity:1}
 .card-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--bg3);position:relative;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0}
 .card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s}
-.product-card:hover .card-img img{transform:scale(1.07)}
 .watch-svg-wrap{transition:transform 0.4s}
 .product-card:hover .watch-svg-wrap{transform:scale(1.08) rotate(4deg)}
 .card-overlay{position:absolute;inset:0;background:rgba(10,10,8,0.72);opacity:0;transition:opacity 0.3s;display:flex;align-items:center;justify-content:center;border-radius:var(--r-lg) var(--r-lg) 0 0}
 .overlay-btn{background:var(--gold);color:#0A0A08;border:none;padding:11px 28px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;border-radius:24px;font-weight:500}
-.card-badge{position:absolute;top:14px;left:14px;background:var(--gold);color:#0A0A08;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:4px 12px;z-index:2;border-radius:24px;font-weight:600}
+.card-badge{position:absolute;top:14px;left:14px;background:var(--gold);color:#0A0A08;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:4px 12px;z-index:5;border-radius:24px;font-weight:600}
 .card-body{padding:1.4rem;flex:1;display:flex;flex-direction:column;border-top:1px solid var(--border)}
 .card-collection{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
 .card-name{font-family:'Cormorant Garant',serif;font-size:20px;font-weight:400;color:var(--text);margin-bottom:6px}
@@ -117,10 +116,11 @@ section{padding:5rem 2rem}
 /* MODAL */
 .modal-backdrop{position:fixed;inset:0;background:rgba(5,5,4,0.93);z-index:200;display:none;align-items:center;justify-content:center;padding:1.5rem}
 .modal-backdrop.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 32px 80px rgba(0,0,0,0.7)}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);max-width:700px;width:100%;max-height:90vh;position:relative;box-shadow:0 32px 80px rgba(0,0,0,0.7);overflow:hidden}
+.modal-inner{position:relative;z-index:1;padding:2.5rem;max-height:90vh;overflow-y:auto}
+.modal-bg-blur{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(28px) brightness(0.22);transform:scale(1.1);z-index:0;pointer-events:none;transition:opacity 0.5s}
 .modal-close{position:absolute;top:1rem;right:1rem;z-index:10;background:rgba(255,255,255,0.06);border:none;color:var(--text2);font-size:18px;cursor:pointer;line-height:1;padding:7px 11px;border-radius:50%;transition:all 0.2s}
 .modal-close:hover{background:rgba(201,168,76,0.15);color:var(--gold)}
-.modal-inner{padding:2.5rem}
 .modal-top{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2rem}
 .modal-img{width:220px;min-width:160px;aspect-ratio:1;flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .modal-img img{width:100%;height:100%;object-fit:cover}
@@ -134,8 +134,8 @@ section{padding:5rem 2rem}
 .spec-key{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
 .spec-val{font-size:13px;color:var(--text)}
 .modal-actions{display:flex;gap:0.75rem;flex-wrap:wrap}
-.btn-wa{background:#25D366;color:#fff;border:none;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:8px;border-radius:24px;font-weight:500}
-.btn-wa:hover{background:#1dab52;transform:translateY(-1px)}
+.btn-wa{background:var(--gold);color:#0A0A08;border:none;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:8px;border-radius:24px;font-weight:500}
+.btn-wa:hover{background:var(--gold-light);transform:translateY(-1px)}
 .btn-mpesa{background:var(--gold);color:#0A0A08;border:none;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;border-radius:24px;font-weight:500}
 .btn-mpesa:hover{background:var(--gold-light);transform:translateY(-1px)}
 .btn-wishlist{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s;border-radius:24px}
@@ -348,7 +348,8 @@ footer{padding:3rem 2rem 2rem;border-top:1px solid var(--border);display:flex;ju
 
 <div class="modal-backdrop" id="modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    <div class="modal-bg-blur" id="modalBgBlur"></div>
+    <button class="modal-close" onclick="closeModal()" aria-label="Close" style="z-index:10">&times;</button>
     <div class="modal-inner" id="modalContent"></div>
   </div>
 </div>
@@ -510,7 +511,7 @@ function renderCards(){
       +'<button class="card-wa" onclick="event.stopPropagation();openWA(\''+waMsg.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\');trackEvent(\'enquiry\',\''+escH(w.name)+'\')" aria-label="WhatsApp">&#128172;</button>'
       +'</div></div></div>';
   }).join('');
-  /* attach dot switchers after render */
+  /* attach dot switchers + hover auto-swap after render */
   list.forEach(function(w){
     var imgs=getImgs(w);
     if(imgs.length>1){
@@ -521,6 +522,23 @@ function renderCards(){
           switchCardImg(w.id,i,imgs);
         });
       });
+      /* auto-swap on hover after 5 seconds */
+      var wrap=document.getElementById('cwrap_'+w.id);
+      if(wrap){
+        var hoverTimer=null;
+        var swapped=false;
+        wrap.addEventListener('mouseenter',function(){
+          swapped=false;
+          hoverTimer=setTimeout(function(){
+            swapped=true;
+            switchCardImg(w.id,1,imgs);
+          },5000);
+        });
+        wrap.addEventListener('mouseleave',function(){
+          clearTimeout(hoverTimer);
+          if(swapped){ switchCardImg(w.id,0,imgs); swapped=false; }
+        });
+      }
     }
   });
 }
@@ -569,9 +587,19 @@ function openModal(id){
     }).join('')+'</div>';
   }
 
+  /* set blurred second image as modal background */
+  var bgBlur=document.getElementById('modalBgBlur');
+  if(bgBlur){
+    var bg2=imgs.length>1?imgs[1]:(imgs.length>0?imgs[0]:null);
+    if(bg2){bgBlur.style.backgroundImage='url('+bg2+')';bgBlur.style.opacity='1';}
+    else{bgBlur.style.opacity='0';}
+  }
+
   var inWish=wishlist.includes(w.id);
-  var waE='Hi! I\u2019m interested in the '+w.name+' \u2014 '+fmtPrice(w.price)+'. Is it still available?';
-  var waP='Hi! I\u2019d like to purchase the '+w.name+' for '+fmtPrice(w.price)+'. Please send me M-Pesa payment details.';
+  var siteUrl='https://kmessentials.vercel.app';
+  var photoLine=imgs.length>0?'\n\ud83d\udcf8 Photo: '+imgs[0]:'';
+  var waE='\ud83d\udd50 *'+w.name+'* \u2014 '+fmtPrice(w.price)+photoLine+'\n\ud83d\udd17 '+siteUrl+'\n\nHi! Is this watch still available?';
+  var waP='\ud83d\udd50 *'+w.name+'* \u2014 '+fmtPrice(w.price)+photoLine+'\n\ud83d\udd17 '+siteUrl+'\n\nHi! I\u2019d like to purchase this. Please send M-Pesa payment details.';
 
   document.getElementById('modalContent').innerHTML=
     '<div class="modal-top">'+galleryHtml
@@ -608,7 +636,12 @@ function toggleWish(id){
   localStorage.setItem('km_wishlist',JSON.stringify(wishlist));
 }
 
-function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow=''}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+  var bgBlur=document.getElementById('modalBgBlur');
+  if(bgBlur){bgBlur.style.opacity='0';}
+}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 
 loadWatches();
