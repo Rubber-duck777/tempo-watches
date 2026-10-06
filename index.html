@@ -597,9 +597,11 @@ function openModal(id){
 
   var inWish=wishlist.includes(w.id);
   var siteUrl='https://kmessentials.vercel.app';
-  var photoLine=imgs.length>0?'\n\ud83d\udcf8 Photo: '+imgs[0]:'';
-  var waE='\ud83d\udd50 *'+w.name+'* \u2014 '+fmtPrice(w.price)+photoLine+'\n\ud83d\udd17 '+siteUrl+'\n\nHi! Is this watch still available?';
-  var waP='\ud83d\udd50 *'+w.name+'* \u2014 '+fmtPrice(w.price)+photoLine+'\n\ud83d\udd17 '+siteUrl+'\n\nHi! I\u2019d like to purchase this. Please send M-Pesa payment details.';
+  var photoLine=imgs.length>0?'\n📸 Photo: '+imgs[0]:'';
+  var waE='🕐 *'+w.name+'* — '+fmtPrice(w.price)+photoLine+'\n🔗 '+siteUrl+'\n\nHi! Is this watch still available?';
+  var waP='🕐 *'+w.name+'* — '+fmtPrice(w.price)+photoLine+'\n🔗 '+siteUrl+'\n\nHi! I’d like to purchase this. Please send M-Pesa payment details.';
+  /* store messages so onclick can retrieve them safely without escaping issues */
+  window._kmWaE=waE; window._kmWaP=waP;
 
   document.getElementById('modalContent').innerHTML=
     '<div class="modal-top">'+galleryHtml
@@ -609,8 +611,8 @@ function openModal(id){
     +'<p class="modal-desc">'+escH(w.description||'')+'</p></div></div>'
     +specs
     +'<div class="modal-actions">'
-    +'<button class="btn-wa" onclick="openWA(\''+waE.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\');trackEvent(\'enquiry\',\''+escH(w.name)+'\')"><span>&#128172;</span>Enquire on WhatsApp</button>'
-    +'<button class="btn-mpesa" onclick="openWA(\''+waP.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\');trackEvent(\'payment_intent\',\''+escH(w.name)+'\')">Pay via M-Pesa</button>'
+    +'<button class="btn-wa" onclick="openWA(window._kmWaE);trackEvent(\'enquiry\',\''+escH(w.name)+'\')"><span>&#128172;</span>Enquire on WhatsApp</button>'
+    +'<button class="btn-mpesa" onclick="openWA(window._kmWaP);trackEvent(\'payment_intent\',\''+escH(w.name)+'\')">Pay via M-Pesa</button>'
     +'<button class="btn-wishlist" id="wishBtn_'+w.id+'" onclick="toggleWish(\''+w.id+'\')">'+(inWish?'&#9829; Saved':'&#9825; Wishlist')+'</button>'
     +'</div>';
 
